@@ -1,5 +1,5 @@
 Editor Option: VIM
-Path Option: Cmd
+Path Option: BashOnly
 SSH Option: OpenSSH
 CURL Option: OpenSSL
 CRLF Option: CRLFAlways
