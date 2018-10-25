@@ -1,2 +1,0 @@
-"0","residuals<-lmProbabilityTime$residuals"
-"0","plot(MarketingData$Time,residuals)"

@@ -1,8 +1,0 @@
-"0","rescale <- (apply(my.german.new,2,max)-apply(my.german.new,2,min)) + (apply(my.german.new,2,min))"
-"0","k.4.centers.unscaled <- cbind(as.data.frame(((k.test[[4]]$centers)*rescale)),""Cluster Size"" = c(rep(""K4.Clusters"",4)))"
-"0","k.4.center.compare<-cbind(melt(k.4.centers.unscaled, id=""Cluster Size""),Cluster_Number = rep(c(1,2,3,4),4))"
-"0","k.5.centers.unscaled <- cbind(as.data.frame(((k.test[[5]]$centers)*rescale)),""Cluster Size"" = c(rep(""K5.Clusters"",5)))"
-"0","k.5.center.compare<-cbind(melt(k.5.centers.unscaled, id=""Cluster Size""),Cluster_Number = rep(c(1,2,3,4,5),4))"
-"0","k.6.centers.unscaled <- cbind(as.data.frame(((k.test[[6]]$centers)*rescale)),""Cluster Size"" = c(rep(""K6.Clusters"",6)))"
-"0","k.6.center.compare<-cbind(melt(k.6.centers.unscaled, id=""Cluster Size""),Cluster_Number = rep(c(1,2,3,4,5,6),4))"
-"0","ggplot(k.4.center.compare, aes(x=variable, y=value, colour=Cluster_Number))+geom_point() + ggtitle(""4 Clusters Without Limiting Y Values"")"

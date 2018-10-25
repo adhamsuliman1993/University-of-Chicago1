@@ -1,5 +1,0 @@
-"0","colnames(df) <- c('Year','Quarter','UN','GDP')
-"
-"2","Error in names(x) <- value : 
-  'names' attribute [4] must be the same length as the vector [3]
-"

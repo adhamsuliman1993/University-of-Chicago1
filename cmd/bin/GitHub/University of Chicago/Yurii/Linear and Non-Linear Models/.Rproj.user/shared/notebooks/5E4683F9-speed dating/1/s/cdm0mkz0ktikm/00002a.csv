@@ -1,3 +1,0 @@
-"0","ggplot(data,aes(x=age,y=attr1_1))+geom_bar(alpha=.1,stat=identity)"
-"2","Error: object of type 'closure' is not subsettable
-"

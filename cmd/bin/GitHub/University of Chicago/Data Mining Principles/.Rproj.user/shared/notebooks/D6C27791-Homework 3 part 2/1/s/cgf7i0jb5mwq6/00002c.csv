@@ -1,1 +1,0 @@
-"0","ggplot(y.df,aes(x=(y.df[,1]),y=y.df[,2], colour=(rownames(y.df)), size = 4)) + geom_point() + xlab('Component 1') + ylab('Component 2') + ggtitle(""Component 1 vs Component 2 with Verimax"")"

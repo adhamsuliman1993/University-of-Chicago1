@@ -1,6 +1,0 @@
-"0","rm(Train)"
-"2","object 'Train' not found"
-"0","Train <- as.data.frame(matrix(cbind(lda.train,qda.train),ncol=2))"
-"0","colnames(Train) <- c(""lda.train"",""qda.train"")"
-"0","Train$diff <- Train$lda.train-Train$qda.train"
-"0","count(Train, diff==0)"

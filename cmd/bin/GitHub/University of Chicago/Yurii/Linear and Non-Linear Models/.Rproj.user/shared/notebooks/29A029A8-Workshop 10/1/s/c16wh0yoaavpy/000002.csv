@@ -1,5 +1,0 @@
-"0","MC.Matrix<-data.frame(rbind(From.Pos1=c(To.Pos1=1,To.Pos2=0,To.Pos3=0,To.Pos4=0),"
-"0","                 From.Pos2=c(To.Pos1=.03,To.Pos2=0,To.Pos3=.97,To.Pos4=0),"
-"0","                 From.Pos3=c(To.Pos1=0,To.Pos2=.97,To.Pos3=0,To.Pos4=.03),"
-"0","                 From.Pos4=c(To.Pos1=0,To.Pos2=0,To.Pos3=0,To.Pos4=1)))"
-"0","kable(MC.Matrix)"

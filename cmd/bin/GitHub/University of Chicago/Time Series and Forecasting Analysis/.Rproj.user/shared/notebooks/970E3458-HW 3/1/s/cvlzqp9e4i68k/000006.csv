@@ -1,3 +1,0 @@
-"0","df1 <- subset(df, Year!=1969)"
-"0","fitARIMA_UN <- arima(df1$UN, order=c(1,1,0))"
-"0","plot(forecast(fitARIMA_UN))"

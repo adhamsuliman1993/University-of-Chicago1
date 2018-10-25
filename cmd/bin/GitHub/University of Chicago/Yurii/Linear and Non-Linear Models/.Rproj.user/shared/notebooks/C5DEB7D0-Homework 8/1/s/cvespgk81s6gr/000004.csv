@@ -1,1 +1,0 @@
-"0","mFixedEffects <- lm(Response~Predictor1 + Predictor2,data)"

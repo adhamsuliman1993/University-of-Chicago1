@@ -1,6 +1,0 @@
-"0","Results.test.table <- table(Results.test$Ensemble,german.credit.test$Creditability)"
-"0","sum(tr(Results.test.table))/sum(Results.test.table)"
-"1","[1]"
-"1"," 0.8166667"
-"1","
-"

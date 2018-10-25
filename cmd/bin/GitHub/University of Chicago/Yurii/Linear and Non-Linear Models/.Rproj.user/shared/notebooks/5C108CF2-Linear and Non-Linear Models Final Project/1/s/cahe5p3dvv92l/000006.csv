@@ -1,4 +1,0 @@
-"0","sample1=rnorm(100)"
-"0","sample2=rnorm(100,1,2)"
-"0","Cum.Distr.Functions <- data.frame(sample1,sample2)"
-"0","ecdfplot(~ sample1 + sample2, data=Cum.Distr.Functions, auto.key=list(space='right'))"

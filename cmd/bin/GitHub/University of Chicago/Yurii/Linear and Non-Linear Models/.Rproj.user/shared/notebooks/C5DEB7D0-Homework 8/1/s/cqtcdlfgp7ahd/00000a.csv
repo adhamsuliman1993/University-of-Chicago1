@@ -1,2 +1,0 @@
-"0","data <- read.table(paste('Week8_Test_Sample.csv',sep = '/'), header=TRUE)"
-"0","head(data)"

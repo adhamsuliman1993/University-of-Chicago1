@@ -1,1 +1,0 @@
-"0","plot(Counting.Process$Time,Counting.Process$Count/Counting.Process$Time,type=""l"",ylab=""Cumulative Intensity"")"

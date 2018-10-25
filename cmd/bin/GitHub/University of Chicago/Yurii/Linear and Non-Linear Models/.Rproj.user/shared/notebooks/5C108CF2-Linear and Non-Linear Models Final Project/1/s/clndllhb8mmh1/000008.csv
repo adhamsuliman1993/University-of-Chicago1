@@ -1,2 +1,0 @@
-"0","Emperical.Copula1 <- as.data.frame(apply(df1,2,rank))"
-"0","plot(Emperical.Copula1)"

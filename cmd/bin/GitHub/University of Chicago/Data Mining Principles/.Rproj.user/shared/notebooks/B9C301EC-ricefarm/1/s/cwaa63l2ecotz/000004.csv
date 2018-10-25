@@ -1,5 +1,0 @@
-"0","data%>%"
-"0","  group_by(region,price,varieties)%>%"
-"0","  summarise(count=mean(price))%>%"
-"0","  ggplot(aes(x="
-"0","  region,y=count,color=varieties))+geom_point()"

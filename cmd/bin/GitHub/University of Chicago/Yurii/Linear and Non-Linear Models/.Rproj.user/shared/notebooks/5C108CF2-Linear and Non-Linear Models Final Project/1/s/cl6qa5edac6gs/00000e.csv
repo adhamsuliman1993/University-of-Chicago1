@@ -1,1 +1,0 @@
-"0","contour(gumbelCopula(Copula.Fit@estimate),dCopula, main=""pdf"",xlab=""u"", ylab=""v"")"

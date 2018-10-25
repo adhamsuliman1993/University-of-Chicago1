@@ -1,4 +1,0 @@
-"0","subset(data.train, time_diff < 60)%>%"
-"0","  group_by(time_diff)%>%"
-"0","  summarise(Success_Rate = mean(state3))%>%"
-"0","  ggplot(aes(x=time_diff,y=Success_Rate))+geom_point()+stat_smooth(method=""auto"",se=""false"")"

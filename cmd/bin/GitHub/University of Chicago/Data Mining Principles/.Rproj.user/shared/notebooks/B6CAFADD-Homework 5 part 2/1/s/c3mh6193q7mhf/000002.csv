@@ -1,6 +1,0 @@
-"0","Glm.Train1 <- glm(Creditability ~ Account.Balance + Duration.of.Credit..month. + Payment.Status.of.Previous.Credit + Purpose + Credit.Amount + Value.Savings.Stocks + Length.of.current.employment + Instalment.per.cent + Sex...Marital.Status+Guarantors+ Telephone+ Foreign.Worker, data = german.credit.train, family = ""binomial"")"
-"0","Glm.train2 <- predict(Glm.Train1, type=""response"")"
-"0","Glm.Train<- ifelse(Glm.Train1$fitted.values > .5,1,0)"
-"0","Tree.train1 <- rpart(Creditability ~ Account.Balance + Duration.of.Credit..month. + Payment.Status.of.Previous.Credit + Purpose + Credit.Amount + Value.Savings.Stocks + Length.of.current.employment + Instalment.per.cent + Sex...Marital.Status, data=german.credit.train, method=""class"",control=rpart.control(cp=0.022,minsplit=30,xval=10, maxsurrogate=0))"
-"0","Tree.train2 <- predict(Tree.train1, type=""prob"")"
-"0","Tree.Train<- ifelse(Tree.train2[,2] > .5,1,0)"

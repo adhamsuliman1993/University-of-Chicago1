@@ -1,7 +1,0 @@
-"0","?dispersiontest"
-"0","modp <- glm(skips ~ . , family=poisson, data=solder)"
-"0","(Dev<-deviance(modp))"
-"1","[1]"
-"1"," 1829.002"
-"1","
-"

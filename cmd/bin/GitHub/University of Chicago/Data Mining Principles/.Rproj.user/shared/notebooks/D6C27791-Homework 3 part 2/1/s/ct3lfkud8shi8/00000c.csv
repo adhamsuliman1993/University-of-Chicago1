@@ -1,8 +1,0 @@
-"0","data(GermanCredit)"
-"0","GermanCredit <- data.frame(scale(GermanCredit[,1:7]))"
-"0","german.credit.train_ind <- sample(1:(nrow(GermanCredit)),700)"
-"0","german.credit_1to7.train <- data.frame(scale(GermanCredit[german.credit.train_ind,]))"
-"0","german.credit_1to7.mean <- apply(german.credit_1to7.train,2,mean)"
-"0","german.credit_1to7.sd <- apply(german.credit_1to7.train,2,sd)"
-"0","german.credit_1to7.train <- (german.credit_1to7.train-german.credit_1to7.mean)/german.credit_1to7.sd"
-"0","german.credit_1to7.train"

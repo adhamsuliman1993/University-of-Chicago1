@@ -1,2 +1,0 @@
-"0","HIV.Protease.Data <- read.csv('HIV_Protease.csv')"
-"0","head(HIV.Protease.Data)"

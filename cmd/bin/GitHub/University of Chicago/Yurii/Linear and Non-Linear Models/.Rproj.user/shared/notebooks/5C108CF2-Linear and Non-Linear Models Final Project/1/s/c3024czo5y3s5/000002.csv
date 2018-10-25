@@ -1,8 +1,0 @@
-"0","NB.Simulated.Tails <- glm.nb(Counts~Temperatures,Simulated.Tails)"
-"2","iteration limit reached"
-"2","iteration limit reached"
-"0","NB.Simulated.Tails$theta"
-"1","[1]"
-"1"," 737219.5"
-"1","
-"

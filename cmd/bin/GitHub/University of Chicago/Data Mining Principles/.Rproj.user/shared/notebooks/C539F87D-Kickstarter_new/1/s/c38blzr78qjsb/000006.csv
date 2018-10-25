@@ -1,5 +1,0 @@
-"0","predict.test1 <- clustreg.predict(clustreg.train2,data2.test)"
-"0","predict.test2 <- clustreg.predict(clustreg.train3,data2.test)"
-"0","predict.test3 <- clustreg.predict(clustreg.train4,data2.test)"
-"0","Test.DF <- as.data.frame(cbind(""K""=c(1,2,3),""Rsq""=c(predict.test1$rsq,predict.test2$rsq,predict.test3$rsq)))"
-"0","Test.DF"

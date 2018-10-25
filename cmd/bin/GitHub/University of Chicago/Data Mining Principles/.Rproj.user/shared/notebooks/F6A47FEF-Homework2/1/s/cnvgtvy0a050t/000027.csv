@@ -1,3 +1,0 @@
-"0","ko.gm.results2 <- data.frame(matrix(unlist(ko.gm.results), nrow=3, byrow=T))"
-"0","colnames(ko.gm.results2) <- c(""KO.Clusters"",""KO.VAF.Group"")"
-"0","cbind(ko.gm.results2,gm.results2[2:4,-2])"

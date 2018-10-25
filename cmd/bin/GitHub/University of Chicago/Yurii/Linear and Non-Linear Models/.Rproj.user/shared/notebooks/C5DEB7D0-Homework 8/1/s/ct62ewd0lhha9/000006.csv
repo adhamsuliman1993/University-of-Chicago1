@@ -1,3 +1,0 @@
-"0","lmerTimeGender<-lmer(Probability~Time+(1|Gender)-1,data=MarketingData)"
-"2","Error: 'data' not found, and some variables missing from formula environment
-"

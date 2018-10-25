@@ -1,2 +1,0 @@
-"0","test_dat <-  read.table(paste('C:/Users/u353822/Documents/Git/bin/GitHub/University of Chicago/Yurii/Linear and Non-Linear Models','Week5_Test_Sample.csv',sep = '/'), header=TRUE)"
-"0","head(test_dat)"

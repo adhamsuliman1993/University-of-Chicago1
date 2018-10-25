@@ -1,1 +1,0 @@
-"0","plot(MarketingData$Time,MarketingData$Probability, type=""p"",pch=19,xlab=""Time"",ylab=""Probability"")"

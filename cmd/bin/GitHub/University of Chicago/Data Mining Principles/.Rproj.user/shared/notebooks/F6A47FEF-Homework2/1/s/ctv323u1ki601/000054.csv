@@ -1,5 +1,0 @@
-"0","gm.results1 <- data.frame(matrix(unlist(gm.results), nrow=9, byrow=T))"
-"0","colnames(gm.results1) <- c(""Clusters"",""Train.VAF"", ""Test.VAF"")"
-"0","gm.results2 <- melt(gm.results1, id=c(""Clusters""))"
-"0","colnames(gm.results2) <- c(""K.Clusters"",""K.VAF.Group"",""K.VAF"")"
-"0","gm.results2"

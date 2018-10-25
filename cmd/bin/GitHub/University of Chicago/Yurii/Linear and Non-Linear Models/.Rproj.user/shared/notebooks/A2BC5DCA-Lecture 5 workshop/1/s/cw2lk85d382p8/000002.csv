@@ -1,5 +1,0 @@
-"0","?predict"
-"0","predicted.prob <- predict(multinom.fit, newdata = test, type=""probs"")"
-"0","predicted.prob<-matrix(sapply(predicted.prob, function(x) max(eps,x)), nrow = nrow(predicted.prob))   "
-"0","predicted.prob<-matrix(sapply(predicted.prob, function(x) min(1-eps,x)), nrow = nrow(predicted.prob))"
-"0","predicted.prob<-sweep(predicted.prob, 1, rowSums(predicted.prob), FUN=""/"")"

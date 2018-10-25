@@ -1,5 +1,0 @@
-"0","data1 <- data"
-"0","data1[,6:19] <- scale(data1[,6:19])"
-"0","x <- prcomp(data1[,6:19])"
-"0","cum.VAF.gm1 <- data.frame(""Number_of_Components"" = c(seq(1,14)), ""VAF"" = (c(x$sdev^2)/sum(x$sdev^2)))"
-"0","ggplot(cum.VAF.gm1, aes(x=Number_of_Components, y=VAF, colours = VAF))  + ggtitle(""Varaince accounted for by individual loadings for Train."") + geom_line(data = cum.VAF.gm1, aes(x=Number_of_Components, y=VAF), color = 'red', size = 3)"

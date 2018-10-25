@@ -1,7 +1,0 @@
-"0","rm(list=ls())"
-"0","knitr::opts_chunk$set(echo = TRUE)"
-"0","options(width = 100, warn = 0)"
-"0","if(!""pacman"" %in% rownames(installed.packages())) {"
-"0","  install.packages(""pacman"")"
-"0","}"
-"0","pacman::p_load(tidyverse,faraway,corrplot, tinytex, dplyr,zoo, knitr, rgl, relaimpo, MuMIn, broom,ggplot2, tidyr, fields, cluster, data.table, reshape2,poLCA)"

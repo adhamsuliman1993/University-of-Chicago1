@@ -1,4 +1,0 @@
-"0","Test <- as.data.frame(matrix(cbind(lda.test,qda.test),ncol=2))"
-"0","colnames(Test) <- c(""lda.test"",""qda.test"")"
-"0","Test$diff <- Test$lda.test-Test$qda.test"
-"0","count(Test, diff==0)"
