@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1537206578346.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "D350CAE",
+    "lastKnownWriteTime" : 1537222416,
+    "last_content_update" : 1537286408463,
+    "path" : "P:/Projects/20180907 - Currency/YOY Analysis R.Rmd",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "19,0",
+        "last_setup_crc32" : "98333A001d0e3fac",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

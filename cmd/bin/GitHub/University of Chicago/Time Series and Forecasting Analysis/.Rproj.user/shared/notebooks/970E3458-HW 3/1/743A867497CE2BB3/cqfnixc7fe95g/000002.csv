@@ -1,0 +1,4 @@
+"0","summary(arma(df$UN,drift=T))
+"
+"2","Error in fn(par, ...) : unused argument (drift = T)
+"

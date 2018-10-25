@@ -1,0 +1,6 @@
+"0","Simulated.Temperature <- qnorm(Simulated.Copula1[,1],mean=100.069853 ,sd=4.812484)"
+"0","Simulated.Intensities <- qgamma(Simulated.Copula1[,2],shape=1.655712, rate=8.132182 )"
+"0","Simulated.Tails<-as.data.frame("
+"0","  cbind(round(Simulated.Intensities[(Simulated.Temperature>110)&(Simulated.Intensities>.5)]*60),"
+"0","        Simulated.Temperature[(Simulated.Temperature>110)&(Simulated.Intensities>.5)]))"
+"0","colnames(Simulated.Tails)<-c(""Counts"",""Temperatures"")"

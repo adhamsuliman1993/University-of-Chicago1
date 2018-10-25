@@ -1,0 +1,9 @@
+"0","data1 <- subset(data, (state ==""successful"" | state==""failed"") &  usd_goal_real > 10000)
+data1$P_G_ratio <- data1$usd_pledged_real/data1$usd_goal_real
+data1$P_B_ratio <- data1$usd_pledged_real/data1$backers
+data1$time_diff <- strptime(data1$deadline,'%m/%d/%Y') - strptime(data1$launched,'%m/%d/%Y')
+data1$date1<- format(as.Date(as.character(data2$deadline),""%m/%d/%Y""),""%Y %m"")
+"
+"2","Error in `$<-.data.frame`(`*tmp*`, date1, value = c(""2014 12"", ""2017 05"",  : 
+  replacement has 5831 rows, data has 104530
+"

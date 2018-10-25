@@ -1,0 +1,1 @@
+"0","ggplot(x.rotation, aes(x=x.rotation[,1], y= x.rotation[,2], colour = rownames(x.rotation), size =4)) + geom_point() + xlab(""Component 1"") + ylab(""Component 2"") + ggtitle(""Component 1 vs Component 2 without Verimax"")"

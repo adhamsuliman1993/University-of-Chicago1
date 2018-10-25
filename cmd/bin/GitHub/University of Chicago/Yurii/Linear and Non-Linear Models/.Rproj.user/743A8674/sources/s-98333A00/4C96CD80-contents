@@ -1,0 +1,129 @@
+---
+title: "Lecture 5 Workshop"
+author: "Adham Suliman"
+date: "July 25, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+rm(list=ls())
+knitr::opts_chunk$set(echo = TRUE)
+if(!"pacman" %in% rownames(installed.packages())) {
+  install.packages("pacman")
+}
+pacman::p_load(tidyverse,faraway,corrplot, tinytex, dplyr,zoo, knitr, rgl, relaimpo, MuMIn, broom,ggplot2, tidyr, fields, cluster, data.table, reshape2,poLCA, stats, copula, caret, GGally, psych,pROC,RODBC,data.table, faraway, MASS, AER,pscl,nnet,ModelMetrics)
+```
+
+```{r}
+1-ppois(9,7.5)
+1-ppois(10,15)
+```
+
+```{r}
+data(gala)
+head(gala)
+```
+
+
+```{r}
+?dispersiontest
+modp <- glm(skips ~ . , family=poisson, data=solder)
+(Dev<-deviance(modp))
+```
+
+"Add interaction terms"
+How can you just square predictors? Is he just trying to scale?
+```{r}
+data(solder)
+head(solder)
+modp <- glm(skips ~ ., family=poisson, data=solder)
+summary(modp)
+dispersiontest(modp)
+summary(modp)
+```
+
+
+
+```{r}
+(Deg.Fred<-df.residual(modp))
+(aicComplete<-modp$aic)
+```
+
+```{r}
+Test.Deviance.Overdispersion.Poisson<-function(Sample.Size,Parameter.Lambda){
+  my.Sample<-rpois(Sample.Size,Parameter.Lambda)
+  Model<-glm(my.Sample~1,family=poisson)
+  Dev<-Model$deviance
+  Deg.Fred<-Model$df.residual
+  ((Dev-Deg.Fred)/sqrt(2*Deg.Fred)>-1.96)&((Dev-Deg.Fred)/sqrt(2*Deg.Fred)<1.96)
+} 
+
+Test.Deviance.Overdispersion.Poisson(900,800)
+```
+
+dispersion with poisson
+```{r}
+test_dat <-  read.table(paste('C:/Users/u353822/Documents/Git/bin/GitHub/University of Chicago/Yurii/Linear and Non-Linear Models','Week5_Test_Sample.csv',sep = '/'), header=TRUE)
+head(test_dat)
+glm.poisson.fit <- glm(Output~Predictor, family=poisson, data=test_dat)
+summary(glm.poisson.fit)
+dispersion.test.p.value <- dispersiontest(glm.poisson.fit)$p.value
+```
+
+Negative Binomial Distribution
+```{r}
+nb.glm <- glm.nb(Output~Predictor, data=test_dat)
+theta <- summary(nb.glm)$theta
+predicted.values = predict(nb.glm,type="response")
+```
+
+```{r}
+res <- list(predicted.values=predicted.values,  
+            dispersion.test.p.value=dispersion.test.p.value,
+            theta = theta)
+saveRDS(res, file = paste('C:/Users/u353822/Documents/Git/bin/GitHub/University of Chicago/Yurii/Linear and Non-Linear Models','result.rds',sep = '/'))
+```
+
+```{r}
+test <- read.table('Week7_Test_Sample_Test.csv',head=T)
+train <- read.table('Week7_Test_Sample_Train.csv',head=T)
+head(train)
+train$Y <- as.factor(train$Y)
+test$Y <- as.factor(train$Y)
+```
+
+```{r}
+#check method for polr
+polr.fit <- polr(Y~X1+X2,data=train)
+multinom.fit <- multinom(Y~X1+X2,data=train)
+```
+
+
+
+```{r}
+eps <- 10**-15
+library("MLmetrics")
+#use his multiogloss
+library("ModelMetrics")
+predicted.prob.polr.train <- predict(polr.fit, type="probs")
+predicted.prob.multinom.train <- predict(multinom.fit,type="probs")
+log.loss.polr.train <-MultiLogLoss(predicted.prob.polr.train,polr.fit$fitted.values)
+log.loss.multinom.train <- MultiLogLoss(predicted.prob.multinom.train,multinom.fit$fitted.values)
+```
+
+```{r}
+?predict
+predicted.prob <- predict(multinom.fit, newdata = test, type="probs")
+predicted.prob<-matrix(sapply(predicted.prob, function(x) max(eps,x)), nrow = nrow(predicted.prob))   
+predicted.prob<-matrix(sapply(predicted.prob, function(x) min(1-eps,x)), nrow = nrow(predicted.prob))
+predicted.prob<-sweep(predicted.prob, 1, rowSums(predicted.prob), FUN="/")
+```
+
+
+```{r}
+res <- list(predicted.prob=predicted.prob,
+            log.loss.polr.train=log.loss.polr.train,
+            log.loss.multinom.train=log.loss.multinom.train)
+saveRDS(res, file = paste('result.rds',sep = '/'))
+```
+

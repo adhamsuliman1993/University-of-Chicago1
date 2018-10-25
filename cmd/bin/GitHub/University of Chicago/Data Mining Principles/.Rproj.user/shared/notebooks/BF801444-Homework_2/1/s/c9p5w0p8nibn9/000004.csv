@@ -1,0 +1,1 @@
+"0","ggplot(gm.results2) + geom_smooth(aes(x=K.Clusters,y=K.VAF, colour=K.VAF.Group)) + scale_colour_manual(values=c(""red"",""green""))"

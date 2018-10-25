@@ -1,0 +1,6 @@
+"0","german.credit.train_ind <- sample(1:(nrow(my.german.new)),500)"
+"0","german.credit.train1<-my.german.new[german.credit.train_ind,]"
+"0","results.3.train <- poLCA(f1,german.credit.train1, nclass=3, nrep= 100, tol=.001, verbose=F, graphs=T)"
+"2","Error in `[.data.frame`(data, , match(colnames(y), colnames(data))[j]) : 
+  undefined columns selected
+"

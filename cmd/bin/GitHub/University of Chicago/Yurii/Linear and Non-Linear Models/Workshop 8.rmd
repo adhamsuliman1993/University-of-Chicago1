@@ -1,0 +1,48 @@
+---
+title: "workshop 8"
+author: "Adham Suliman"
+date: "August 15, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+if(!"pacman" %in% rownames(installed.packages())) {
+  install.packages("pacman")
+}
+pacman::p_load(tidyverse,faraway,corrplot, tinytex, dplyr,zoo, knitr, rgl, relaimpo, MuMIn, broom,ggplot2, tidyr, fields, cluster, data.table, reshape2,poLCA, stats, copula, caret, GGally, psych,pROC,RODBC, quantreg, rpart, rpart.plot, rattle, RColorBrewer, faraway, lme4, knitr)
+data
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+data(pulp)
+data <- pulp
+data1 <- 
+  data%>%
+  group_by(operator)%>%
+  summarise(mean(bright))
+data1
+data%>%
+  dplyr::left_join(data1,by=operator)
+
+rep(data1[1,2],5)
+data$operator.mean <- as.matrix(c((rep(data1[1,2],5),rep(data1[2,2],5),rep(data1[3,2],5),rep(data1[4,2],5))),ncol=1)
+data$operator.mean
+data
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+In workshop, data is shrinked by (1|operator) which gives each operator it's own intercept. This is why dots are shifted in second image, and this allows for no loss of dof because each line(realizations) is calculated from an individual group's intercept (similar to baysian, but nothing is used from "previous distribution"). Annova loses dof on using B0+B1.
+```{r pressure, echo=FALSE}
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

@@ -1,0 +1,6 @@
+"0","mean(model.pred.direction != german.credit.test$Class)
+"
+"1","[1]"
+"1"," 0.3266667"
+"1","
+"

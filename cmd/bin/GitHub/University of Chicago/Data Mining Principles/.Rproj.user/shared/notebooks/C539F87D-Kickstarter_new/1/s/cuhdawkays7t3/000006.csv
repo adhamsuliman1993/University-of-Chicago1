@@ -1,0 +1,14 @@
+"0","data2$P_G_ratio <- data2$usd_pledged_real/data2$usd_goal_real
+data2$P_B_ratio <- data2$usd_pledged_real/data2$backers
+data2$time_diff <- strptime(data2$deadline,'%m/%d/%Y') - strptime(data2$launched,'%m/%d/%Y')
+data2$date <- format(as.Date(as.character(data2$deadline),""%m/%d/%Y""),""%Y %m"")
+nrow(data2)*.7
+"
+"1","[1]"
+"1"," 6311.2"
+"1","
+"
+"0","x <- sample(1:(nrow(data2)),6311,replace=F)"
+"0","x1 <- setdiff(1:nrow(data2),x)"
+"0","data2.train <- data2[x,]"
+"0","data2.test <- data2[x1,]"

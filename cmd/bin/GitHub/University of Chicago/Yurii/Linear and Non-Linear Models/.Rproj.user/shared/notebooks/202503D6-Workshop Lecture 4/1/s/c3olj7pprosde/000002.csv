@@ -1,0 +1,3 @@
+"0","exp(confint(train.logit))"
+"2","Error in confint(train.logit) : object 'train.logit' not found
+"

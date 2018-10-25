@@ -1,0 +1,3 @@
+[0.548, 0.873, 0.493, 0.734, 0.627, 0.816, 0.384, 0.403, 0.772, 0.814]
+(34.6, 16.43, 49, 85, 13.56, 46.46, 11.98, 23.65, 79.85, 33.75)
+{1985: 'Cycle of Warewolf', 1987: {1: 'The Eyes of the Dragon', 2: 'The Dark Tower:The Drawing of the tree', 3: 'Misery', 4: 'The Tommyknockers'}, 1996: {'The Green Miles': {1: 'The Two Dead Girls', 2: 'The Mouse on the Mile'}, 3: "Coffery' Hands", 4: 'The Bad Death of Edward Delacriox', 5: 'Night Journey', 6: 'Coffery on the Mile'}, 1991: {1: 'The Stand', 2: 'The Dark Tower:The Waste Lands'}}

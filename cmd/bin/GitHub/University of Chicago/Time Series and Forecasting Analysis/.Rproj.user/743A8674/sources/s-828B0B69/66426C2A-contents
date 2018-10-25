@@ -1,0 +1,113 @@
+---
+title: "HW 2"
+author: "Adham Suliman"
+date: "October 4, 2018"
+output: html_document
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Plot the independent variables X2, X3 X4 together in a single plot - what do you conclude in terms of relationship between them?
+Scatter plot among the variables
+ADF of the independent variables
+Regression output - R2 and any other metric you want to mention
+Regression coefficients
+p-value of the coefficients
+What can you comment about multicollinearity?
+plot the ACF of the residuals
+
+
+X2, which is the red line, consistently changes it's slope with sharp turns. If we look at where the line starts and where it ends, the line seems to have a trend of 0. In fact, all the lines seem to have a trend of 0.
+
+X3, which is the green line, changes it's slope a couple times and might have some seasonality. 
+
+X4, which is the blue line, increases and decreases in it's Y values much more extremely than X2 and X3.  
+
+X2 and X3 seem to share the same direction within their slopes while X4 seems to be doing it's own thing. 
+```{r cars}
+library('ggplot2','tseries','reshape2')
+df <- read.csv('HW 2.csv',header=T)
+colnames(df) <- c('X1','X2','X3','X4')
+ggplot(df, aes(x=(1:length(df$X2))))+
+  geom_line(aes(y=X2,colour='X2'))+
+  geom_line(aes(y=X3, colour='X3'))+
+  geom_line(aes(y=X4,colour='X4'))
+```
+
+Scatter plot among the variables
+```{r}
+ggplot(df, aes(x=(1:length(df$X2))))+
+  geom_point(aes(y=X2,colour = "X2"))+
+  geom_point(aes(y=X3,colour = 'X3'))+
+  geom_point(aes(y=X4,colour = 'X4' ))
+```
+
+
+
+
+
+ADF of X2. As seen earlier, X2 changed slopes throughout the line plot and is considered non stationary by the ADF test. 
+```{r}
+tseries::adf.test(df[,2])
+```
+
+ADF of X3. As seen earlier, X3 changed slopes throughout the line plot ,though not as much as X2, and is considered non stationary by the ADF test. 
+```{r}
+tseries::adf.test(df[,3])
+```
+
+ADF of X4. As seen earlier, X4's slope didn't change throughout the line plot, though not as much as X2, and is considered non stationary by the ADF test.  
+```{r}
+tseries::adf.test(df[,4])
+```
+
+
+When the linear regression of X2 is taken against X1, a high R2 of .8219 is produced wtih the coefficent of the intercept not being significant. We can see that the coefficeint for the slope is significant with a t-value of 6.522. For every 1 unit increase in X1, there is an estimated increase of 7.897 for X2. 
+```{r}
+x2_lm <-lm(df[,1]~df[,2])
+summary(x2_lm)
+```
+
+When the linear regression of X3 is taken against X1, a higher R2 of .8479 is produced wtih the coefficent of the intercept ever so slightly significant. We can see that the coefficeint for the slope is significant with a t-value of 7.155. This would lead us to believe that X3 is a better variable to utilize when predicting a value for our dependent variable.  For every 1 unit increase in X1, there is an estimated increase of 12.669 for X3. 
+```{r}
+x3_lm <-lm(df[,1]~df[,3])
+summary(x3_lm)
+```
+
+When the linear regression of X4 is taken against X1, a low R2 of .1285 is produced wtih the coefficent of the intercept ever so slightly significant. We can see that the coefficeint for the slope is not significant with a t-value of 1.525. This would lead us to believe that X4 is not a good variable to utilize when predicting a value for our dependent variable. 
+```{r}
+x4_lm <-lm(df[,1]~df[,4])
+summary(x4_lm)
+```
+
+As we can see below, X3 has the highest correlation with our dependent variable. 
+```{r}
+c("X2 rsq" = summary(x2_lm)$r.squared,"X3 rsq" = summary(x3_lm)$r.squared, "X4 rsq"=summary(x4_lm)$r.squared)
+```
+
+Talk about multicolinearity between independents.
+
+With an increase in the VIF value, the higher multicolinearity that variable shares with the other independent varaibles. X2 has the highest multicolinearity with X3 following and finally, X4, shares the least multicolinearity with the other idnependent variables. In order to remove a variable due to high multicolinearity, it is best practice to remove variables with a VIF of 5.0 or higher. Since none of these variables exceed 5, it can be stated that none of the variables should be excluded due to multicolinearity.
+```{r}
+lm_all <- lm(X1~.,df)
+(vif_all <- car::vif(lm_all))
+summary(vif_all)
+names(summary(vif_all))
+```
+
+
+
+For the residuals of X2, there is quite a strong autocorrelation for the even numbered lags as it slowly decreases. Something to take note of is that the second lag exceedss an ACF of -.5. Only lag 2 is significant though because it surpasses the blue line. L0 is also significant with itself which is because autocorrelation at P=0 will equal 1. 
+The acf of X3's resiuals has much less autocorrelation than X2's. The 1 lag doesn't reach 0.5, and the remaining lags are relatively insignificant. There are a couple notes of autocorrelation at lag 4,6, and 7, but none of the lags surpass the level of significance.
+The acf of X4's residuals has probably the least autocorrelation out of the 3 dependent variables. There is somewhat noticeable correlation at lag 1, but next to none at lag 2,3,6,7, 8 and 9. There is some autocorrelation to be taken noted of at lag 4 and 5, but none of the lags surpass the level of significance. 
+```{r}
+acf(x2_lm$residuals)
+acf(x3_lm$residuals)
+acf(x4_lm$residuals)
+```
+

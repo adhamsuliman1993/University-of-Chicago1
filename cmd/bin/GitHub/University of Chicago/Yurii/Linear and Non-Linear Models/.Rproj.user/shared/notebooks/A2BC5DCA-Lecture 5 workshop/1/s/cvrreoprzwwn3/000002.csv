@@ -1,0 +1,4 @@
+"0","res <- list(predicted.values=predicted.values,  "
+"0","            dispersion.test.p.value=dispersion.test.p.value,"
+"0","            theta = theta)"
+"0","saveRDS(res, file = paste('C:/Users/u353822/Documents/Git/bin/GitHub/University of Chicago/Yurii/Linear and Non-Linear Models','result.rds',sep = '/'))"

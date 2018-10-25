@@ -1,0 +1,1 @@
+"0","kom.gm.5 <- komeans(german.credit.test1, nclust = 5, lnorm=2, nloops=100)"

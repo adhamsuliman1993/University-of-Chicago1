@@ -1,0 +1,3 @@
+"0","nb.glm <- glm.nb(Output~Predictor, data=test_dat)"
+"0","theta <- summary(nb.glm)$theta"
+"0","predicted.values = predict(nb.glm,type=""response"")"

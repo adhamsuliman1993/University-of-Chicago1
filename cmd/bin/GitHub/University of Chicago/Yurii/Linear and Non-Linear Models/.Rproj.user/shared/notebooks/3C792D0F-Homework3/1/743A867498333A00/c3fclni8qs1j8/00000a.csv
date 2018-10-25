@@ -1,0 +1,4 @@
+"0","fitCopula(frankCopula(), Fitting.Gaussian.Copula, method=""mpl"")"
+"2","Error in .local(copula, data, ...) : 
+  object 'Fitting.Gaussian.Copula' not found
+"

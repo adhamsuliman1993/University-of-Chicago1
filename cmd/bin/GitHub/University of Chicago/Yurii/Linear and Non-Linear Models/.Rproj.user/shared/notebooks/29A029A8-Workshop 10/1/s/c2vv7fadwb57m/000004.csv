@@ -1,0 +1,12 @@
+"0","library('depmix')
+"
+"2","package ‘depmix’ was built under R version 3.4.4"
+"2","
+Attaching package: ‘depmix’
+
+"
+"2","The following object is masked from ‘package:broom’:
+
+    bootstrap
+
+"

@@ -1,0 +1,5 @@
+"0","depmix(list(ACC~Pacc,RT~Pacc), nstates=1,data=sp1,family=list(multinomial(),gaussian()))
+"
+"2","Error in depmix(list(ACC ~ Pacc, RT ~ Pacc), nstates = 1, data = sp1,  : 
+  could not find function ""depmix""
+"

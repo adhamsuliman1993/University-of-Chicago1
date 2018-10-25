@@ -1,0 +1,4 @@
+"0","km.gm.5 <- kmeans(german.credit.test, center = 5, nstart = 100)"
+"0","km.gm.5$VAF <- km.gm.5$betweenss/km.gm.5$totss"
+"0","clusplot(german.credit.train1, km.gm.5$cluster, color=TRUE, shade=TRUE, "
+"0","  	labels=2, lines=0) "

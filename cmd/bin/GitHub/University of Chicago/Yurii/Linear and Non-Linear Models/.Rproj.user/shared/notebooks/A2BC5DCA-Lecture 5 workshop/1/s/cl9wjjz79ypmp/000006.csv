@@ -1,0 +1,28 @@
+"0","eps <- 10**-15"
+"0","library(""MLmetrics"")"
+"2","package ‘MLmetrics’ was built under R version 3.4.4"
+"2","
+Attaching package: ‘MLmetrics’
+
+"
+"2","The following object is masked from ‘package:psych’:
+
+    AUC
+
+"
+"2","The following objects are masked from ‘package:caret’:
+
+    MAE, RMSE
+
+"
+"2","The following object is masked from ‘package:base’:
+
+    Recall
+
+"
+"0","#use his multiogloss"
+"0","library(""ModelMetrics"")"
+"0","predicted.prob.polr.train <- predict(polr.fit, type=""probs"")"
+"0","predicted.prob.multinom.train <- predict(multinom.fit,type=""probs"")"
+"0","log.loss.polr.train <-MultiLogLoss(predicted.prob.polr.train,polr.fit$fitted.values)"
+"0","log.loss.multinom.train <- MultiLogLoss(predicted.prob.multinom.train,multinom.fit$fitted.values)"

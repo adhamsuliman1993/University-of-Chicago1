@@ -1,0 +1,4 @@
+"0","GermanCredit <- read.csv('German.Credit.csv')"
+"0","german.credit.train_ind <- sample(1:(nrow(GermanCredit)),700,replace=F)"
+"0","german.credit.train <- (GermanCredit[german.credit.train_ind,])"
+"0","german.credit.test <- (GermanCredit[-german.credit.train_ind,])"

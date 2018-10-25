@@ -1,0 +1,3 @@
+"0","test <- read.table('Week7_Test_Sample_Test.csv',head=T)"
+"0","train <- read.table('Week7_Test_Sample_Train.csv',head=T)"
+"0","head(train)"

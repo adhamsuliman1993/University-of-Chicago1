@@ -1,0 +1,75 @@
+---
+title: "Homework 6"
+author: "Adham Suliman"
+date: "August 3, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+rm(list=ls())
+if(!"pacman" %in% rownames(installed.packages())) {
+  install.packages("pacman")
+}
+pacman::p_load(tidyverse,faraway,corrplot, tinytex, dplyr,zoo, knitr, rgl, relaimpo, MuMIn, broom,ggplot2, tidyr, fields, cluster, data.table, reshape2,poLCA, stats, copula, caret, GGally, psych,pROC,RODBC,data.table, faraway, MASS, AER,pscl)
+```
+
+```{r cars}
+test_dat <- read.table('Week6_Test_Sample.csv',header=T)
+names(test_dat)
+zeroinfl.nb.fit <- zeroinfl(Output~Predictor.Count|Predictor.Zero,data=test_dat, dist="negbin")
+?zeroinfl
+predicted.prob.zero.component<-predict(zeroinfl.nb.fit,type="zero")#1
+Probability.Zero <-predict(zeroinfl.nb.fit,type="prob")[,1]#4
+theta <- zeroinfl.nb.fit$theta
+theta
+predicted.prob.count.component <- (Probability.Zero-predicted.prob.zero.component)/(1-predicted.prob.zero.component)#3
+```
+
+
+
+```{r pressure, echo=FALSE}
+predicted.prob.total <- as.data.frame(cbind(Probability.Zero,"Predictor.Count"=test_dat$Predictor.Count,Predictor.Zero=test_dat$Predictor.Zero))
+head(predicted.prob.total)
+```
+
+
+
+
+
+<simpleError in stud.predicted.prob.total[, "Predictor.Count"]: subscript out of bounds>
+```{r}
+res <- list(predicted.prob.zero.component=predicted.prob.zero.component,
+            predicted.prob.count.component = predicted.prob.count.component,
+            predicted.prob.total = predicted.prob.total,
+            theta = theta)
+
+saveRDS(res, file = paste('C:/Users/u353822/Documents/Git/bin/GitHub/University of Chicago/Yurii/Linear and Non-Linear Models','result.rds',sep = '/'))
+res
+```
+<simpleError in `[.data.frame`(stud.predicted.prob.total, , "Predictor.Count"): undefined columns selected>
+
+
+
+
+
+
+```{r cars}
+test_dat <- read.table('Week6_Test_Sample.csv',header=T)
+names(zeroinfl.nb.fit)
+zeroinfl.nb.fit <- zeroinfl(Output~.,data=test_dat, dist="negbin")
+predicted.prob.zero.component<-predict(zeroinfl.nb.fit,type="zero")
+predicted.prob.count.component <-predict(zeroinfl.nb.fit,type="prob")[,1]
+theta <- zeroinfl.nb.fit$theta
+```
+
+
+
+```{r pressure, echo=FALSE}
+Predictor.Count <- zeroinfl(Output~Predictor.Count,data=test_dat, dist="negbin")
+Predictor.Zero <- zeroinfl(Output~Predictor.Zero,data=test_dat, dist="negbin")
+Probability.Zero<-as.vector(predict(Predictor.Zero,type="zero"))
+Probability.Count <-as.vector(predict(Predictor.Count,type="prob")[,1])
+predicted.prob.total <- as.matrix(cbind(Probability.Zero,Probability.Count))
+dim(predicted.prob.total)
+```

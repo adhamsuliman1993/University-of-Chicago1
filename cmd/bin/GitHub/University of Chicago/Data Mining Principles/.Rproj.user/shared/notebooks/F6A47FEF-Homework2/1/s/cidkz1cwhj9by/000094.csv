@@ -1,0 +1,1 @@
+"0","ggplot(k.5.center.compare, aes(x=variable, y=value, colour=Cluster_Number))+geom_point() + ylim(-10,10) + ggtitle(""5 Clusters Limiting Y Values"")"

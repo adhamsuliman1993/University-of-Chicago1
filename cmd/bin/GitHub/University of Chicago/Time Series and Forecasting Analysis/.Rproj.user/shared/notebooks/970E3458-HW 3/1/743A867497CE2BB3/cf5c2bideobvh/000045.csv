@@ -1,0 +1,5 @@
+"0","fitARIMA_GDP <- arima(df1$GDP, order=c(0,1,0),drift=0.6480)
+"
+"2","Error in arima(df1$GDP, order = c(0, 1, 0), drift = 0.648) : 
+  unused argument (drift = 0.648)
+"

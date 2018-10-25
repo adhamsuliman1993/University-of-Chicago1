@@ -1,0 +1,1 @@
+{"frames":[],"message":"Error in depmix(list(ACC ~ Pacc, RT ~ Pacc), nstates = 1, data = sp1,  : \n  could not find function \"depmix\"\n"}

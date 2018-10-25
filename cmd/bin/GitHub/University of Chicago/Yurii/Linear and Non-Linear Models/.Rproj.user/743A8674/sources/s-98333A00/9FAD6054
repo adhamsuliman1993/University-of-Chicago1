@@ -1,0 +1,24 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1537203833766.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "9FAD6054",
+    "lastKnownWriteTime" : 1537286651,
+    "last_content_update" : 1537299465750,
+    "path" : "~/Git/bin/GitHub/University of Chicago/Yurii/Linear and Non-Linear Models/Homework3.R",
+    "project_path" : "Homework3.R",
+    "properties" : {
+        "cursorPosition" : "189,44",
+        "docOutlineVisible" : "0",
+        "scrollLine" : "171",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

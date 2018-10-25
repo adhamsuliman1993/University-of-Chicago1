@@ -1,0 +1,13 @@
+"0","  "
+"0","kom.num.of.clust <- 3:5"
+"0","ko.results <- "
+"0","  lapply(kom.num.of.clust, function(x){"
+"0","  komeans.results <- list()"
+"0","  komeans.results$k <- x"
+"0","  komeans.train <- komeans(data.clust.train, nclust = x, lnorm=2, nloops=100)"
+"0","  komeans.results$train.VAF <- komeans.results$VAF"
+"0","  #return(kmeans.german.result)"
+"0","  return(list(x = komeans.results$k, Ko.Train.VAF = komeans.results$train.VAF))"
+"0","  })"
+"2","Error in nrow(data) : object 'data.clust.train' not found
+"

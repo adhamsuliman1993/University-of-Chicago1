@@ -1,0 +1,15 @@
+"0","Frank.Copula.Object <- frankCopula(dim=2)"
+"0","Frank.Copula.Fit <- fitCopula(Frank.Copula.Object,"
+"0","                               pobs(Fitting.Copula, ties.method = ""average""), "
+"0","                               method = ""ml"","
+"0","                               optim.method = ""BFGS"", "
+"0","                               optim.control = list(maxit=1000))"
+"0","Frank.Copula.Fit@estimate"
+"1","[1]"
+"1"," 1.244481"
+"1","
+"
+"0","cor(Frank.Copula.Fit,method='spearman')"
+"2","Error in cor(Frank.Copula.Fit, method = ""spearman"") : 
+  supply both 'x' and 'y' or a matrix-like 'x'
+"

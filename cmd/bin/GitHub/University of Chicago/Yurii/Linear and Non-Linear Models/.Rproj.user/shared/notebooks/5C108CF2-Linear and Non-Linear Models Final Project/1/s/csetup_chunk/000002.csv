@@ -1,0 +1,20 @@
+"0","#rm(list=ls())"
+"0","knitr::opts_chunk$set(echo = TRUE)"
+"0","options(width = 100, warn = 0)"
+"0","if(!""pacman"" %in% rownames(installed.packages())) {"
+"0","  install.packages(""pacman"")"
+"0","}"
+"0","pacman::p_load(tidyverse,faraway,corrplot, tinytex, dplyr,zoo, knitr, rgl, relaimpo, MuMIn, broom,ggplot2, tidyr, fields, cluster, data.table, reshape2,poLCA, stats, AER, MASS, pscl, faraway, pscl, lattice, latticeExtra, copula,rmvdc, AER)"
+"2","cannot open URL 'http://www.stats.ox.ac.uk/pub/RWin/src/contrib/PACKAGES.rds': HTTP status was '404 Not Found'"
+"2","package ‘rmvdc’ is not available (for R version 3.5.1)"
+"2","cannot open URL 'http://www.stats.ox.ac.uk/pub/RWin/bin/windows/contrib/3.5/PACKAGES.rds': HTTP status was '404 Not Found'"
+"2","cannot open URL 'http://www.stats.ox.ac.uk/pub/RWin/bin/windows/contrib/3.5/PACKAGES.gz': HTTP status was '404 Not Found'"
+"2","cannot open URL 'http://www.stats.ox.ac.uk/pub/RWin/bin/windows/contrib/3.5/PACKAGES': HTTP status was '404 Not Found'"
+"2","unable to access index for repository http://www.stats.ox.ac.uk/pub/RWin/bin/windows/contrib/3.5:
+  cannot open URL 'http://www.stats.ox.ac.uk/pub/RWin/bin/windows/contrib/3.5/PACKAGES'"
+"2","Bioconductor version 3.7 (BiocInstaller 1.30.0), ?biocLite for help
+"
+"2","there is no package called ‘rmvdc’"
+"2","Failed to install/load:
+rmvdc"
+"0","conditionalEcho<-F"

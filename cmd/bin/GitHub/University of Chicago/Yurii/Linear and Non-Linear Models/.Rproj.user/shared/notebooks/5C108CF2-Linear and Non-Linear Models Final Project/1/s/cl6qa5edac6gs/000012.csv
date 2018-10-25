@@ -1,0 +1,4 @@
+"0","df <- data.frame(Temperatures = qnorm(Simulated.Copula[,1],mean=100.069853 ,sd=4.812484),"
+"0","                 Intensities = qgamma(Simulated.Copula[,2],shape=1.655712, rate=8.132182/60 ))"
+"0","Emperical.Copula <- as.data.frame(apply(df,2,rank))"
+"0","plot(Emperical.Copula)"

@@ -1,0 +1,156 @@
+---
+title: "Homework 3"
+author: "Adham Suliman"
+date: "October 13, 2018"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+if(!"pacman" %in% rownames(installed.packages())) {
+  install.packages("pacman")
+}
+pacman::p_load( tseries, forecast, contrib.url)
+
+```
+
+
+```{r cars}
+df <- read.csv('Unemployment_GDP_UK.csv',header=T)
+colnames(df) <- c('Year','Quarter','UN','GDP')
+```
+
+ARIMA modeling:
+
+Use datasets from 1955 to 1968 to build an ARMA or ARIMA models for UN and GDP.
+Justify why you chose (ARMA or ARIMA) one over the other.  Note there will be 2 models, one for UN and another for GDP.
+Use the chosen UN and GDP models to forecast the UN and the GDP for 1969.
+Compare your forecasts with the actual values using error = actual - estimate and plot the errors.
+Calculate the sum of squared error for each UN and GDP models.
+
+Exploratory Analysis
+```{r}
+adf.test(df$UN)
+adf.test(df$GDP)
+acf(df$UN)
+acf(df$GDP)
+```
+
+
+
+
+Below, An arima model is taken for both df$UN and df$GDP with AICs of  540.47 and 153.15 respectively.
+```{r}
+auto.arima(df$UN)
+auto.arima(df$GDP)
+```
+
+
+Below, An arma model is taken for both df$UN and df$GDP with AICs of  560.44 and 158.19 respectively.
+```{r}
+summary(arma(df$UN))
+summary(arma(df$GDP))
+```
+
+
+The arima model allows for lower AICs for both GDP and UN.
+
+Forecast for GDP is done below. 
+```{r}
+df1 <- subset(df, Year!=1969)
+df2 <- subset(df, Year==1969)
+fitARIMA_GDP <- arima(df1$GDP, order=c(0,1,0))
+summary(fitARIMA_GDP)
+plot(forecast(fitARIMA_GDP))
+tsdisplay((fitARIMA_GDP$residuals))
+```
+
+Compare your forecasts with actual values using error=actual - estimate and plot
+```{r}
+predict(fitARIMA_GDP,n.ahead = 4)
+df4 <- as.data.frame(cbind("GDP"=df2$GDP,"pred"=c(117.8, 117.8, 117.8, 117.8)))
+df4$error <- (df4[,1]-df4[,2])
+plot(df4$error,
+     xlab ="Quarters of 1969",
+     ylab = "error")
+df4$sum_of_squares <- (df4[,1]-df4[,2])^2
+library('dplyr')
+df4%>%
+  summarize(sum(sum_of_squares))
+```
+
+
+
+Forecast for UN is done below. 
+```{r}
+df1 <- subset(df, Year!=1969)
+fitARIMA_UN <- arima(df1$UN, order=c(1,1,0))
+plot(forecast(fitARIMA_UN))
+tsdisplay((fitARIMA_UN$residuals))
+```
+
+Compare your forecasts with actual values using error=actual - estimate and plot
+```{r}
+predict(fitARIMA_UN,n.ahead = 4)
+df4 <- as.data.frame(cbind("GDP"=df2$UN,"pred"=c(522.0004, 515.3343, 510.8904, 507.9280)))
+df4$error <- (df4[,1]-df4[,2])
+plot(df4$error,
+     xlab ="Quarters of 1969",
+     ylab = "Error")
+df4$sum_of_squares <- (df4[,1]-df4[,2])^2
+library('dplyr')
+df4%>%
+  summarize(sum(sum_of_squares))
+```
+
+
+Regression - build regression models that use:
+
+UN as the independent variable and GDP as the dependent variable - use data from 1955 to 1968 to build the model. Forecast for 1969 and plot the errors as a percentage of the mean. Also calculate the sum of squared(error) as a percentage of the mean.
+GDP as the independent variable and UN as the dependent variable - use data from 1955 to 1968 to build the model.  Forecast for 1969 and plot the errors as a percentage of the mean. Also calculate the sum of squared(error) as a percentage of the mean of the actual values.
+Compare the 2 models using the sum of squared error as a percentage of the mean of the actual values - any reason to believe which should be the independent and the dependent variable ?
+
+Just put pedicted against true, no reason to bring in the before data
+```{r}
+lm_UN <- lm(UN~GDP,df1)
+lm_UN_pred <- predict(lm_UN,newdata=df2) 
+df_UN <- df
+plot(lm_UN$fitted.values)
+df_UN$UN[57:60] <-lm_UN_pred
+summary(lm(UN~GDP, df1))
+plot((df_UN$UN[57:60] -lm_UN_pred)/df_UN$UN[57:60],
+  xlab = "Predictions",
+  ylab = "Error % of mean")
+sum(((df_UN$UN[57:60] -lm_UN_pred)^2)/df_UN$UN[57:60])
+plot(((df_UN$UN[57:60] -lm_UN_pred)^2)/df_UN$UN[57:60],
+  xlab = "Predictions",
+  ylab = "Error % of mean")
+```
+
+```{r}
+lm_GDP <- lm(GDP~UN,df1)
+lm_GDP_pred <- predict(lm_GDP,newdata=df2) 
+df_GDP <- df
+plot(lm_GDP$fitted.values)
+df_GDP$GDP[57:60] <-lm_GDP_pred
+summary(lm(GDP~UN,df_GDP))
+plot((df_GDP$GDP[57:60] -lm_GDP_pred)/df_GDP$GDP[57:60],
+  xlab = "Predictions",
+  ylab = "Error % of mean")
+sum(((df_GDP$GDP[57:60] -lm_GDP_pred)^2)/df_GDP$GDP[57:60])
+plot(((df_GDP$GDP[57:60] -lm_GDP_pred)^2)/df_GDP$GDP[57:60],
+  xlab = "Predictions",
+  ylab = "Error % of mean")
+```
+
+
+
+Since the sum of square error divided by actuals for the GDP model are smaller than the UN model, UN should be the independent variable, while GDP the de dependent to produce the most accurate model.  This is possible because the linear model for lm_GDP does a better job at predicting future values. 
+```{r}
+sum(((df_UN$UN[57:60] -lm_UN_pred)^2)/df_UN$UN[57:60])
+sum(((df_GDP$GDP[57:60] -lm_GDP_pred)^2)/df_GDP$GDP[57:60])
+```
+

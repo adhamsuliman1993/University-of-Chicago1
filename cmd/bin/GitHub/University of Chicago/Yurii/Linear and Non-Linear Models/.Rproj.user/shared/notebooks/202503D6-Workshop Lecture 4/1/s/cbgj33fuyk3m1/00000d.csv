@@ -1,0 +1,7 @@
+"0","nSample <- 1000"
+"0","b0 <- 1.5"
+"0","b1 <- 1.2"
+"0","X <- rexp(nSample,.8)"
+"0","eta <- b0+b1*X"
+"0","prbty <- exp(eta)/(1+exp(eta))"
+"0","plot(prbty)"

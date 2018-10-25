@@ -1,0 +1,3 @@
+"0","qda.model <- qda(Creditability~., data = german.credit.train)"
+"0","qda.train <- predict(qda.model)$class"
+"0","qda.test <- predict(qda.model, newdata=german.credit.test)$class"

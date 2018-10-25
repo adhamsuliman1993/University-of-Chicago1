@@ -1,0 +1,558 @@
+---
+title: "Final Project MSCA 31007 Statistical Analysis"
+date: "June 7, 2018"
+output:
+  word_document:
+  pdf_document:
+    latex_engine: xelatex
+    number_section: yes
+    toc: yes
+    toc_depth: 3
+Author: Adham Suliman
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(width = 100, warn = 0)
+if(!"pacman" %in% rownames(installed.packages())) {
+  install.packages("pacman")
+}
+pacman::p_load(tidyverse,faraway,corrplot, tinytex, dplyr,zoo, knitr, rgl, relaimpo, MuMIn)
+```
+
+
+
+Step 1:
+```{r}
+AssignmentData<-  read.csv(file=paste("C:/Users/u353822/Documents/R/Statistical Analysis","Statistical Analysis Project.csv",sep="/"),
+                           row.names=1,header=TRUE,sep=",")
+head(AssignmentData)
+matplot(AssignmentData[,-c(8,9,10)],type='l')
+matplot(AssignmentData[,-c(9,10)],type='l')
+```
+The first visualization looks at all of the data with relation to the predictors(bonds). All of the bonds start at a yield of around 15%, and they follow the same general trend.There are periods of positive and negative slopes, but the general trend seems to be going towards a percent yield of below 5%.
+The second visualization has all of the predictors found in the first visualization, but it also includes Output 1. Output 1 seems to follow the same general trend of the predictors, but it begins to deviate from the predictors at around the index of 3000. The output 1 even falls below 0% which would be an interesting concept for a bond. 
+
+
+Step 2:
+Output1~USGG3M
+```{r}
+Input1.Linear.Model<-lm(Output1~USGG3M,AssignmentData)
+c(Total.Variance=var(AssignmentData[,8]),Unexplained.Variance=summary(Input1.Linear.Model)$sigma^2)
+summary(Input1.Linear.Model)$coefficients
+c(R2=(summary(Input1.Linear.Model)$r.squared),R2.adj=(summary(Input1.Linear.Model)$adj.r.squared))
+matplot(AssignmentData[,8],type="l",xaxt="n")
+  lines(Input1.Linear.Model$fitted.values,col="red")
+```
+The Linear Regresseion model here takes the Output against the USGG3M. The unexplained variance amounts to 2.8 out of 76.8 which shows that these two data sets seem to be fairly similar. All of the models below will have a total variance of 76.8 which is stemming from Output 1. The unexplained variance will be reduced to the extent that the predictor is capable of explaining the variance. From the summary of the coefficients, the Pr(>t) = 0 shows that there is significant evidence that the coefficient and intercept are   not equal to 0. As expected, R2 and R2.adj are equal because there is only one predictor in the model.  R2.adj is used to penalize correlation when more than one predictor is being utilized. R2 is not reduced as more predictors are utilized. R2 and R2.adj will be expected to be the same for all models utilizing one predictor. 
+
+
+Output1~USGG6M
+```{r}
+Input2.Linear.Model<-lm(Output1~USGG6M,AssignmentData)
+c(Total.Variance=var(AssignmentData[,8]),Unexplained.Variance=summary(Input2.Linear.Model)$sigma^2)
+summary(Input2.Linear.Model)$coefficients
+c(R2=(summary(Input2.Linear.Model)$r.squared),R2.adj=(summary(Input2.Linear.Model)$adj.r.squared))
+matplot(AssignmentData[,8],type="l",xaxt="n")
+lines(Input2.Linear.Model$fitted.values,col="red")
+```
+The Linear Regresseion model here takes the Output against the USGG6M. The unexplained variance amounts to 1.9 out of 76.8 which shows that these two data sets seem to be fairly similar. From the summary of the coefficients, the Pr(>t) = 0 shows that there is significant evidence that the coefficient and intercept are   not equal to 0. 
+
+Output1~USGG2YR
+```{r}
+Input3.Linear.Model<-lm(Output1~USGG2YR,AssignmentData)
+c(Total.Variance=var(AssignmentData[,8]),Unexplained.Variance=summary(Input3.Linear.Model)$sigma^2)
+summary(Input3.Linear.Model)$coefficients
+c(R2=(summary(Input3.Linear.Model)$r.squared),R2.adj=(summary(Input3.Linear.Model)$adj.r.squared))
+matplot(AssignmentData[,8],type="l",xaxt="n")
+lines(Input3.Linear.Model$fitted.values,col="red")
+
+```
+The Linear Regresseion model here takes the Output against the USGG2YR. The unexplained variance amounts to .25 out of 76.8 which shows that these two data sets seem to be fairly similar. From the summary of the coefficients, the Pr(>t) = 0 shows that there is significant evidence that the coefficient and intercept are   not equal to 0.
+
+Output1~USGG3YR
+```{r}
+Input4.Linear.Model<-lm(Output1~USGG3YR,AssignmentData)
+c(Total.Variance=var(AssignmentData[,8]),Unexplained.Variance=summary(Input4.Linear.Model)$sigma^2)
+summary(Input4.Linear.Model)$coefficients
+c(R2=(summary(Input4.Linear.Model)$r.squared),R2.adj=(summary(Input4.Linear.Model)$adj.r.squared))
+matplot(AssignmentData[,8],type="l",xaxt="n")
+lines(Input4.Linear.Model$fitted.values,col="red")
+```
+The Linear Regresseion model here takes the Output against the USGG3YR. The unexplained variance amounts to .16 out of 76.8 which shows that these two data sets seem to be fairly similar. From the summary of the coefficients, the Pr(>t) = 0 shows that there is significant evidence that the coefficient and intercept are   not equal to 0. 
+
+Output1~USGG5YR
+```{r}
+Input5.Linear.Model<-lm(Output1~USGG5YR,AssignmentData)
+head(AssignmentData,3)
+c(Total.Variance=var(AssignmentData[,8]),Unexplained.Variance=summary(Input5.Linear.Model)$sigma^2)
+summary(Input5.Linear.Model)$coefficients
+c(R2=(summary(Input5.Linear.Model)$r.squared),R2.adj=(summary(Input5.Linear.Model)$adj.r.squared))
+matplot(AssignmentData[,8],type="l",xaxt="n")
+lines(Input5.Linear.Model$fitted.values,col="red")
+```
+The Linear Regresseion model here takes the Output against the USGG3YR. The unexplained variance amounts to .63 out of 76.8 which shows that these two data sets seem to be fairly similar. From the summary of the coefficients, the Pr(>t) = 0 shows that there is significant evidence that the coefficient and intercept are   not equal to 0. 
+
+Output1~USGG10YR
+```{r}
+Input6.Linear.Model<-lm(Output1~USGG10YR,AssignmentData)
+c(Total.Variance=var(AssignmentData[,8]),Unexplained.Variance=summary(Input6.Linear.Model)$sigma^2)
+summary(Input6.Linear.Model)$coefficients
+c(R2=(summary(Input6.Linear.Model)$r.squared),R2.adj=(summary(Input6.Linear.Model)$adj.r.squared))
+matplot(AssignmentData[,8],type="l",xaxt="n")
+lines(Input6.Linear.Model$fitted.values,col="red")
+```
+The Linear Regresseion model here takes the Output against the USGG3YR. The unexplained variance amounts to 2.4 out of 76.8 which shows that these two data sets seem to be fairly similar. From the summary of the coefficients, the Pr(>t) = 0 shows that there is significant evidence that the coefficient and intercept are   not equal to 0. 
+
+Output1~USGG30YR
+```{r}
+Input7.Linear.Model<-lm(Output1~USGG30YR,AssignmentData)
+c(Total.Variance=var(AssignmentData[,8]),Unexplained.Variance=summary(Input7.Linear.Model)$sigma^2)
+summary(Input7.Linear.Model)$coefficients
+c(R2=(summary(Input7.Linear.Model)$r.squared),R2.adj=(summary(Input7.Linear.Model)$adj.r.squared))
+matplot(AssignmentData[,8],type="l",xaxt="n")
+lines(Input7.Linear.Model$fitted.values,col="red")
+```
+The Linear Regresseion model here takes the Output against the USGG3YR. The unexplained variance amounts to 4.9 out of 76.8 which shows that these two data sets seem to be fairly similar. From the summary of our coefficients, the Pr(>t) = 0 shows that there is significant evidence that the coefficient and intercept are   not equal to 0. 
+
+If one predictor must be selected from the above to best represent Output 1, USGG3YR would be used because of it's minimal unexplained variance and it's maximized R2. All of the models fitted values seemed to correspond to the output 1 values quite well, which is why all the models had such a high adj.R2 and a low amount of unexplained variance. 
+
+Collect all slopes and intercepts in one table and print this table. Try to do it in one line using apply() function.
+```{r}
+apply(AssignmentData,2, function(z) lm(Output1~z,AssignmentData)$coefficients)
+```
+It's interesting to see that all of the bonds have negative intecepts with positive slopes ranging from 2.4 to slightly above 3.
+
+---
+Step 3
+---
+Step 3:
+Fit linear regression models using single output as input and each ofthe original inputs as outputs.
+Collect all slopes and intercepts in one table and print this table
+```{r cars}
+apply(AssignmentData,2, function(z) lm(z~Output1,AssignmentData)$coefficients)
+```
+When Output 1 is made to be the input, all of the intercepts for the bonds are now positive ranging from 4.6 to 4.9 with positive slopes ranging from .3 to .4.
+
+---
+Step 4
+---
+Step 4:
+Estimate logistic regression using all inputs and the data on FED tightening and easing cycles.
+```{r}
+AssignmentDataLogistic<-data.matrix(AssignmentData,rownames.force="automatic")
+EasingPeriods<-AssignmentDataLogistic[,9]
+EasingPeriods[AssignmentDataLogistic[,9]==1]<-0
+TighteningPeriods<-AssignmentDataLogistic[,10]
+cbind(EasingPeriods,TighteningPeriods)[c(550:560,900:910,970:980),]
+All.NAs<-is.na(EasingPeriods)&is.na(TighteningPeriods)
+AssignmentDataLogistic.EasingTighteningOnly<-AssignmentDataLogistic
+AssignmentDataLogistic.EasingTighteningOnly[,9]<-EasingPeriods
+AssignmentDataLogistic.EasingTighteningOnly<-AssignmentDataLogistic.EasingTighteningOnly[!All.NAs,]
+AssignmentDataLogistic.EasingTighteningOnly[is.na(AssignmentDataLogistic.EasingTighteningOnly[,10]),10]<-0
+matplot(AssignmentDataLogistic.EasingTighteningOnly[,-c(9,10)],type="l",ylab="Data and Binary Fed Mode")
+lines(AssignmentDataLogistic.EasingTighteningOnly[,10]*20,col="red")
+```
+It is quite visible that when the treasurey has decided to go through a period of tightening within the past, interest rates would rise gradually. This makes sense in that if there is not hat much free cashflow in the market place, investors should receive higher returns on their free capital because cash is in demand. The initial tightening period takes place between index 250 and about index 600. This is the longest tightening period within the dataset, and there also seems to be substantial growth with the rates and especially output 1. The same relation seems to occur during the tightening period between 1100 and 1200 and the tightening period between 1300 and 1550. 
+
+```{r}
+LogisticModel.TighteningEasing_3M<-glm(AssignmentDataLogistic.EasingTighteningOnly[,10]~
+                                      AssignmentDataLogistic.EasingTighteningOnly[,1],family=binomial(link=logit))
+summary(LogisticModel.TighteningEasing_3M)
+matplot(AssignmentDataLogistic.EasingTighteningOnly[,-c(9,10)],type="l",ylab="Data and Fitted Values")
+lines(AssignmentDataLogistic.EasingTighteningOnly[,10]*20,col="red")
+lines(LogisticModel.TighteningEasing_3M$fitted.values*20,col="green")
+```
+The fitted values of the glm is the green line above. The fitted values for the Easining and Tightening model against the USGG3M follows the trend of the rest of the bonds in that it has a positive slope in periods of tightening while having a negative slope in periods of easing. The only period where this doesn't apply seems to be towards the very begining of our data set and right before the first tigteining period where the fitted values have a positive slope for a short time span. This green line is the probability created through the logistic regression which will determine if the date was in either an easining or a tightening period. Periods of tightening are identified by the red bars that flatten out at 20 on the y-axis. By taking the fitted line and multiplying it by 20, it can be thought of as a probability that it is within a tighetining period.
+
+
+```{r}
+AssignmentDataLogistic.EasingTighteningOnly<-data.frame(AssignmentDataLogistic.EasingTighteningOnly)
+LogisticModel.TighteningEasing_All<-glm(AssignmentDataLogistic.EasingTighteningOnly[,10]~.,AssignmentDataLogistic.EasingTighteningOnly[,-c(8,9,10)],family=binomial(link=logit))
+summary(LogisticModel.TighteningEasing_All)$aic
+summary(LogisticModel.TighteningEasing_All)$coefficients[,c(1,4)]
+matplot(AssignmentDataLogistic.EasingTighteningOnly[,-c(9,10)],type="l",ylab="Results of Logistic Regression")
+lines(AssignmentDataLogistic.EasingTighteningOnly[,10]*20,col="red")
+lines(LogisticModel.TighteningEasing_All$fitted.values*20,col="green")
+```
+USGG3M has the smallest Pr(>|z|) which  means it has the largest affect upon the glm. Due to such a large affect upon the glm model that takes into account easing and tightening, it may be wise to utilize USGG3m in the predictive model. USGG10YR has the largest Pr(>|z|) which means it has the smallest effect upon the glm. 
+In the previous model, a logistic regression of Output 1 was taken against USGG3M. In this model, a logistic regression of Output 1 is taken against all bonds. What's interesting is that even though USGG3M has the largest affect of any of the bonds, when the other bonds are included, there is a much larger variance within the fitted values. The fitted values still follow the trend spoken to in the previous model.
+
+Lop.odds
+```{r}
+Log.Odds<-predict(LogisticModel.TighteningEasing_All)
+plot(Log.Odds,type="l")
+
+Probabilities<-1/(exp(-Log.Odds)+1)
+plot(LogisticModel.TighteningEasing_All$fitted.values,type="l",ylab="Fitted Values & Log-Odds")
+lines(Probabilities,col="red")
+
+```
+The log odds uses the fitted values of the Tightening periods against all bonds and puts it into a predictive model. By looking at the probabilities, the Y axis is reduced to a scale between 0 adn 1 and keeps a similar figure. 
+
+---
+Step 5
+---
+Step 5: 
+Compare linear regression models with different combinations of predicotrs. Selec tthe best combination.  
+Estiamte the full model by using all 7 predictors
+```{r}
+AssignmentDataRegressionComparison<-data.matrix(AssignmentData[,-c(9,10)],rownames.force="automatic")
+AssignmentDataRegressionComparison<-AssignmentData[,-c(9,10)]
+RegressionModelComparison.Full<-lm(AssignmentDataRegressionComparison[,8]~.,AssignmentDataRegressionComparison[,-8])
+summary(RegressionModelComparison.Full)$coefficients
+c(R2=summary(RegressionModelComparison.Full)$r.squared, Adjusted.R2=summary(RegressionModelComparison.Full)$adj.r.squared)
+summary(RegressionModelComparison.Full)$df
+```
+Q: Interpret the fitted Model. How good is the fit? How significant are the paramters?
+A: Because R2 and asjursted.R2 are 1, the model is a perfect fit which would mean the model is overfitting. This is not an ideal scenario in statistics. Since all of the Pr(>|t|) =0, the current model decrees that all parameters are significant. All predictors shouldn't be used because as a perfect model in Analytics isn't very useful for future predictive analysis.
+
+Estimate the null model by including only the intercept
+```{r}
+RegressionModelComparison.Null<-lm(AssignmentDataRegressionComparison[,8]~+1,AssignmentDataRegressionComparison[,-8])
+summary(RegressionModelComparison.Null)
+c(R2=summary(RegressionModelComparison.Null)$r.squared, Adjusted.R2=summary(RegressionModelComparison.Null)$adj.r.squared, df=summary(RegressionModelComparison.Null)$df)
+anova(RegressionModelComparison.Full,RegressionModelComparison.Null)
+
+```
+Why summary(RegressionModelComparison.Null) does not show R2?
+When a regression model is taken for an Output against the intercept, the model doesn't take into account any of the predictors. Without the predictors, the model cannot be explained simply by the intercept therefore there is no correlation to show for. This is why R2 and adjusted.R2 are equal to zero.
+When the anova is taken between the two models, RegressionModelComparison.Full has a large RSS because it explains the model fully, but it also has 7 degrees of freedom less because it ulizes all predictors. 
+
+
+The best combination is attempted to be found by utilizing the add1() process
+```{r}
+(myScope<-names(AssignmentDataRegressionComparison)[-which(names(AssignmentDataRegressionComparison)=="Output1")])
+anova(RegressionModelComparison.Null)
+add1(RegressionModelComparison.Null,scope=myScope)
+(myScope<-myScope[-which(myScope=="USGG3YR")])
+RegressionModelComparison.3yr<-lm(Output1~1+USGG3YR, AssignmentDataRegressionComparison)
+add1(RegressionModelComparison.3yr,myScope)
+myScope<-myScope[-which(myScope=="USGG3M")]
+RegressionModelComparison.3yr.3m<-lm(Output1~1+USGG3YR+USGG3M, AssignmentDataRegressionComparison)
+add1(RegressionModelComparison.3yr.3m, myScope)
+RegressionModelComparison.3yr.3m.30yr<-lm(Output1~1+USGG3YR+USGG3M+USGG30YR, AssignmentDataRegressionComparison)
+myScope<-myScope[-which(myScope=="USGG30YR")]
+add1(RegressionModelComparison.3yr.3m.30yr, myScope)
+RegressionModelComparison.3yr.3m.30yr.6m<-lm(Output1~1+USGG3YR+USGG3M+USGG30YR+USGG6M, AssignmentDataRegressionComparison)
+myScope<-myScope[-which(myScope=="USGG6M")]
+add1(RegressionModelComparison.3yr.3m.30yr.6m, myScope)
+```
+The objective is to find a combination of predictors that produces the lowest AIC. Using the add1() process, the first most important predictor is USGG3YR. When USGG3YR is taken out of our predictors and the add1() process is run again, the most important predictor is USGG3M. When USGG3YR and USGG3m are taken out of he predictors and the add1() process is run again, the most important predictor is USGG30YR.
+
+
+Using the MuMIn Package, all combinations of predictors' AICs can be seen to determine which combination of predictors will lead to the most accurate model while attempting to reserve degrees of freedom. 
+```{r}
+lm.test<-lm(Output1~., AssignmentDataRegressionComparison, na.action='na.fail')
+summary(model.avg(dredge(lm.test)))
+my.model<-lm(Output1~1+USGG10YR+USGG2YR+USGG3M, AssignmentDataRegressionComparison)
+cbind("Using MuMIn"= AIC(my.model), "Using Stepwise Model" = AIC(RegressionModelComparison.3yr.3m.30yr))
+cbind('Adjusted.R.2'=(summary(my.model)$adj.r.squared),'Adjusted.R.2'=(summary(RegressionModelComparison.3yr.3m.30yr)$adj.r.squared ))
+```
+If the add1() process is utilized, it would show that the USGG3YR is first most important predictor. Using the MuMIn package, if only one predictor had to be used, USGG3YR would be the best predictor as well. The problem with the add1() process is that it doesn't take into account combinations of predictors because it is a stepwise function. With the MuMIn package, we are able to run all combinations of predictors to determine which has the lowest AIC while reserving degrees of freedom.
+From the table above, the AIC of the best combinations of predictors with their respective degrees of freedome can bee seen below:
+DF AIC:
+9	-313034
+8	-40461
+7	-34647
+6	-26669
+5	-22412
+4	-6856
+
+When determining the selection of the best predictors to utilize to predict Output 1, R2 and R2.adjusted would not suffice when distinguishing between models because they don't penalize larger data sets enough to determine which model is truly the best. Utilizing AIC, the lowest AIC was the model with df=9 where all predictors were used. This should not be the chosen model becuase the model would be overfitted. There is justification to utilize any other combination of predictors because they all produce a high R2.adjusted while not overfitting the model. A final decision to utilize 3 predictors was decided upon because there is a massive reduction in AIC between the model with 4 degrees of freedom and the model with 5 degrees of freedom. Something that was very interesting is that the model with 5 degrees of freedom didn't include USGG3YR as a predictor though it was considered to be the most important predictor of all predictors utilizng the add1() process if only one predictor were to be utilized. 
+
+BIC is an even stricter method that is used to differentiate predictors. The equation for BIC is -2log-likelihood+n_parameters(log(n_observations)). Below, the model chosen utilizing MuMIn vs add1() are observed using BIC. 
+```{r}
+c('Using MuMIn'=(BIC(my.model)),'Using add1()'=(BIC(RegressionModelComparison.3yr.3m.30yr)))
+```
+BIC still identifies the combination created utilizing the MuMIn package as a better set of predictors than what would have been produced with the add1() process.  
+
+
+```{r}
+anova(my.model,RegressionModelComparison.3yr.3m.30yr)
+```
+Using anova, it can be seen that the model utilizing MuMIn has a smaller residual sum of squares meaning that it is a better combination of predictors for output 1.
+
+---
+Step 6
+---
+Step 6
+Rolling mean values for each variable.
+```{r}
+Window.width<-20; Window.shift<-5
+all.means<-rollapply(AssignmentDataRegressionComparison,width=Window.width,by=Window.shift,by.column=TRUE, mean)
+head(all.means,10)
+```
+Above are the rolling means where the width of the windows consisted of 20 days and the shifts consisted of 5 days.
+
+```{r}
+Count<-1:length(AssignmentDataRegressionComparison[,1])
+Rolling.window.matrix<-rollapply(Count,width=Window.width,by=Window.shift,by.column=FALSE,
+          FUN=function(z) z)
+Rolling.window.matrix[1:10,]
+Points.of.calculation<-Rolling.window.matrix[,10]
+Points.of.calculation[1:10]
+length(Points.of.calculation)
+Means.forPlot<-rep(NA,length(AssignmentDataRegressionComparison[,1]))
+Means.forPlot[Points.of.calculation]<-all.means[,1]
+Means.forPlot[1:50]
+cbind(AssignmentDataRegressionComparison[,1],Means.forPlot)[1:50,]
+plot(Means.forPlot,col="red")
+lines(AssignmentDataRegressionComparison[,1])
+```
+It can be seen here that the means for the rolling means function seems to fit the USGG3M data which would be expected due to the large number of datapoints that are utilizd. The means for the rolling means function might not fit as well if there was less data within the given dataset.  
+
+
+Run rolling daily difference standard deviation of each variable
+```{r}
+AssignmentData.SD<-AssignmentData[,-c(9,10)]
+AssignmentData.SD2<-AssignmentData.SD[-1,]
+AssignmentData.SD1<-AssignmentData.SD[1:8299,]
+AssignmentData.SD.Diff<-AssignmentData.SD2-AssignmentData.SD1
+head(AssignmentData.SD.Diff,10)
+rolling.sd<-rollapply(AssignmentData.SD.Diff,width=Window.width,by=Window.shift,by.column=TRUE, sd)
+rolling.dates<-rollapply(AssignmentDataRegressionComparison[-1,],width=Window.width,by=Window.shift,
+                         by.column=FALSE,FUN=function(z) rownames(z))
+head(rolling.dates)
+rownames(rolling.sd)<-rolling.dates[,10]
+head(rolling.sd)
+matplot(rolling.sd[,c(1,5,7,8)],xaxt="n",type="l",col=c("black","red","blue","green"))
+axis(side=1,at=1:1656,rownames(rolling.sd))
+```
+Q: Show periods of high volatility. How is volatility related to the level of rates?
+A: The coding used to find the rolling means is also utlized to find the rolling standard deviations. The visualization above shows the standard deviations on a line graph of USGG3M, USGG5YR, USGG3OYR, and Output 1. The standard deviations seem to have a sharp rise at around 2008. This rise could be do to the precipitous drop Output 1 has within its data set at this time period. Another interesting inference to obtain by looking at the visualization is that while  USGG3M, USGG5YR,USGG3OYR, and Output 1 all seem to follow the same trend, Output 1 seems to always have a higher standard deviation. 
+
+
+```{r}
+high.volatility.periods<-rownames(rolling.sd)[rolling.sd[,8]>.5]
+high.volatility.periods
+Coefficients<-rollapply(AssignmentDataRegressionComparison,width=Window.width,by=Window.shift,by.column=FALSE,
+         FUN=function(z) coef(lm(Output1~USGG3M+USGG5YR+USGG30YR,data=as.data.frame(z))))
+rolling.dates<-rollapply(AssignmentDataRegressionComparison[,1:8],width=Window.width,by=Window.shift,by.column=FALSE,
+                         FUN=function(z) rownames(z))
+
+rownames(Coefficients)<-rolling.dates[,10]
+Coefficients[1:10,]
+pairs(Coefficients)
+matplot(Coefficients[,-1],xaxt="n",type="l",col=c("black","red","green"))
+axis(side=1,at=1:1657,rownames(Coefficients))
+```
+Pairs plot      
+The pairs plot of coefficients represents the coefficients between a short term bond(USGG3M), a medium term bond(USGG5YR), and a long term bond(USGG30YR). The medium and long term bonds share a stong negative correlation with respect to their coefficients. This means that their yields could be attempting to counteract one another throughout the dataset. The short term bond doesnt seem to share much correlation with respect to it's coefficients with the medium and long term bonds. The intercept doesn't seem to share much correlation with the short term or medium term bonds, but it does seem to have a slight negative correlation with the long term bond. 
+The third visualization looks at the coefficients for the short, medium and long term bonds. The coefficients seem to diverge at times from their means. The dates where this phenomon can be seen are within the years of 1987,1991, 2005 and 2012.
+
+Q: Is the picture of coefficients consistent with the picture of pairs? If yes, explain why.
+A: Yes, it was stated that the 30 yr and 5 yr shared a stronger netagtive correlation with one another, and neither seemed to correlate with the 3 months. It can be seen that the green line(Long term bond) and the red line (medium term bond) seem to reflect one another. The black line remains between the two for a majority of the visualization.
+
+```{r}
+high.slopespread.periods<-rownames(Coefficients)[Coefficients[,3]-Coefficients[,4]>3]
+jump.slopes<-rownames(Coefficients)[Coefficients[,3]>3]
+high.slopespread.periods
+```
+This shows when dates where USGG5YR had a greater coefficeint than USGG30YR.This would be where the green line goes above the red line in the previous visualizaiton. 
+
+
+```{r}
+r.squared<-rollapply(AssignmentDataRegressionComparison,width=Window.width,by=Window.shift,by.column=FALSE,
+         FUN=function(z) summary(lm(Output1~USGG3M+USGG5YR+USGG30YR,data=as.data.frame(z)))$r.squared)
+r.squared<-cbind(rolling.dates[,10],r.squared)
+r.squared[1:10,]
+plot(r.squared[,2],xaxt="n",ylim=c(0,1))
+axis(side=1,at=1:1657,rownames(Coefficients))
+```
+Q:How often the R-Squared is not conidered high?
+All of the R-squared seem to be very high. They will not share that level of correlation when their coffeicients diverge from their average which was spoken to with the last visualization.
+In the second visualization, the R-squared is near 100% for a majority of the data set. It does diverge a bit lower than 95%, and this can be attributed to the fact that the coefficients diverge from their means at certain points of the data set which can be seen in the previous visualization. The dates where this phenomon can be seen are within the years of 1987,1991, 2005 and 2012. This is determined through the code below.
+
+
+```{r}
+(low.r.squared.periods<-r.squared[r.squared[,2]<.9,1])
+```
+Q: What could cause the decrease of R2:
+A: There are certain dates wehre the data for the coeffieicnets extend past one another. With the plot of coefficients above, the extension of these models can be seen which would cause for low R2. The dates where this phenomon can be seen are within the years of 1987,1991, 2005 and 2012.
+
+```{r}
+Pvalues<-rollapply(AssignmentDataRegressionComparison,width=Window.width,by=Window.shift,by.column=FALSE,
+                        FUN=function(z) summary(lm(Output1~USGG3M+USGG5YR+USGG30YR,data=as.data.frame(z)))$coefficients[,4])
+rownames(Pvalues)<-rolling.dates[,10]
+Pvalues[1:10,]
+matplot(Pvalues,xaxt="n",col=c("black","blue","red","green"),type="o")
+axis(side=1,at=1:1657,rownames(Coefficients))
+```
+
+What does this graph tell us? 
+The USGG30YR bonds were non-significant against the output up until 2008. After 2008, the USGG3M began to have strong insignificance. The USGG5YR  has a short period of insiginificance at the end of the 80s.
+
+Below, the dates of insignificance can be observed for the USGG3M, USGG%YR, and USGG30YR can be seen.
+```{r}
+c("USGG3M")
+rownames(Pvalues)[Pvalues[,2]>.5]
+c("USGG5YR")
+rownames(Pvalues)[Pvalues[,3]>.5]
+c("USGG30YR")
+rownames(Pvalues)[Pvalues[,4]>.5]
+```
+
+---
+Step 7
+---
+Step 7
+```{r}
+AssignmentData.Output<-(AssignmentData$Output1)
+AssignmentData<-data.matrix(AssignmentData[,1:7],rownames.force="automatic")
+AssignmentData.cov<-data.matrix(AssignmentData[,1:7], rownames.force="NA")
+dim(AssignmentData)
+head(AssignmentData)
+```
+
+Explore the dimensionality of the set of 3, 2Y and 5Y yields.
+```{r}
+AssignmentData.3M_2Y_5Y<-AssignmentData[,c(1,3,5)]
+length(AssignmentData.3M_2Y_5Y)
+pairs(AssignmentData.3M_2Y_5Y)
+cov(AssignmentData[,-c(8,9)])
+```
+The covariance matrix's values initially increase as you move to the bottom right of the matrix, but then they begin to decrease. This means that USGG2YR, USGG3YR, and USGG5YR share a strong amount of variance within their data sets with other short and mid term bonds. The longer term bonds share less variance with one another. The USGG2YR and the USGG5YR share a very strong positive correlation wtih one anotehr. The USGG3M also shares a strong polsitive correlation with the two otehr predictors but there seems to be some deviation from that correlation towards the end of each line. The deviations for the USGG3M could be due to the insignificance of the coefficient towards the end of the data set as seen previously in the visualization which looked at the dates of insignificance for USGG3M. 
+
+Observe the 3d plot of the set.
+```{r}
+rgl.points(AssignmentData.3M_2Y_5Y)
+```
+The three dimensional plot produced through the code above combines the data sets for the USGG3M, USGG2YR, and the USGG5YR data. It is flat due to the fact that USGG5YR and USGG2YR share such a strong correlation. We can see deviations which reflect USGG3M in the pair plot above which is representative of the deviation of USGG3M to both USGG2YR and USGG5YR. 
+
+Manually Solving for Covariance
+```{r}
+AssignmentData.means<-cbind(rep(mean(AssignmentData[,1]),8300),rep(mean(AssignmentData[,2]),8300),rep(mean(AssignmentData[,3]),8300),rep(mean(AssignmentData[,4]),8300),rep(mean(AssignmentData[,5]),8300),rep(mean(AssignmentData[,6]),8300),rep(mean(AssignmentData[,7]),8300))
+D<-AssignmentData.cov-AssignmentData.means
+D<-as.matrix(D)
+n<-nrow(AssignmentData)
+C<-(t(D)%*%(D))/n
+C
+```
+In object D, the data is centered by subtracting the mean. By taking the dot product between the transpose of D and D and then diving by n, the covariance matrix is produced. 
+
+```{r}
+Covariance.Matrix<-cov(AssignmentData[,-c(8,9)])
+Covariance.Matrix
+Maturities<-c(.25,.5,2,3,5,10,30)
+contour(Maturities,Maturities,Covariance.Matrix)
+```
+Cov() can also be utilized to create the covariance matrix. The countour plot attempts to create a 3d image using a 2d image. It can be seen that the lower left part of the graph has the highest elements of the graph with a height of 12.5. This number gradually decreases as we move to the top right of the graph. This means that the longer bonds tend to share less covariance with other bonds than the shorter term bonds. This would make sense becuase predicting the market in the long run is incredibly difficult therefore rates shouldn't fluctuate nearly as much as they would with the short term bonds. 
+
+PCA Manually Done
+
+```{r}
+AssignmentData.Centered<-AssignmentData-AssignmentData.means
+Eigen.Decomposition<-eigen(Covariance.Matrix)
+Loadings <- Eigen.Decomposition$vectors
+Factors <- AssignmentData.Centered%*%Loadings
+AssignmentData.Output.Factors<-as.data.frame(cbind(AssignmentData.Output,Factors))
+LinMod.PCA<-lm(AssignmentData.Output~.,AssignmentData.Output.Factors)
+calc.relimp(LinMod.PCA)
+barplot(Eigen.Decomposition$values/sum(Eigen.Decomposition$values),width=2,col = "black",
+        names.arg=c("F1","F2","F3","F4","F5","F6","F7"))
+#Identify columns you want, and then remove the [,1:3] below
+matplot(Maturities,Loadings[,1:3],type="l",lty=1,col=c("black","red","green"),lwd=3)
+matplot(Factors[,1:3],type="l",col=c("black","red","green"),lty=1,lwd=3)
+```
+1)In the first output from the data above, the first factor has a relative importance of 1 compared to the rest of the factors. We can see the Loadings of the eigenvalues by looking at the coefficients for the different model sizes.
+2)The barplot indicates again that the relative importance of the 1st factor is one, which is incredibly high compared to the other factors. 
+3)The third visualization looks at how the first three loadings effect each of the bonds. Eigenvalues are the equivalents to our loadings. The first loading follows a squared function, the second loading follows a quadratic function, and the third loading follows a cubic function. The first loading remains positive for the entirety of the visualization. The first loading seems to peak at the USGG2YR, and then has a negative slope for the remainder of the dataset. The second loading initially has a very strong positive slope, and it tapers out as it approaches the USGG30YR. The third loading initially starts as a positive effect, but it shoots down into the negatives at around the USGG2YR. It seemingly continues to have an even stronger negative effect on the USGG3YR.The third loading has a negative effect on the USGG5YR,but it is much less than the two preceding maturities. The third loading has a positive effect on both USGG10YR and USGG30Yr. It seems that the first and third loadings attempt to counterbalance the 2nd loading at  the very beggiing of the data set. As the second loading increases its effect in a positive direction, the third loading moves to have a neggative effect with a very strong negative slope. They both end as positive effects at the USGG30YR. The second loading seems to have a possitive effect at the USGG3YR, while the 3rd Loading initially becomes negative at around the USGG6M.  
+4)In the Fourth Visualization, Factor 1 has a massive impact on the dataset. It has a stronger impact than any of the factors for a majority of the dataset execpt for between the index of 2500 and 5000. Even within that range, there are several points where Factor 1 effect exceeds that of both factor 2 and factor 3.
+A question that could be asked is why does factor 1 initially have a negative effect and then a positive effect towards the end of our data set. This visualization occurs because during the process of PCA, a line is placed on the axis where there is the most variation. This line doesn't necessarily point in the right direction which is why the magniuted of factor 1 is correct, yet it's sign is incorrect. This is why we multiple factor 1 by -1 below. 
+
+
+Change the signs of the first facor and the corresponding factor loading
+```{r}
+Loadings[,1]<--Loadings[,1]
+Factors[,1]<--Factors[,1]
+matplot(Factors[,1:3],type="l",col=c("black","red","green"),lty=1,lwd=3)
+matplot(Maturities,Loadings[,1:3],type="l",lty=1,col=c("black","red","green"),lwd=3)
+plot(Factors[,1],Factors[,2],type="l",lwd=2)
+```
+Now, both of Factor 1's magnitude and sign correlate with how the predictors act within the data set. 
+
+Q:Draw at least three conclusions from the plot of the first two factors above
+A: 
+1) There seems to be a cyclical relationship between the two factors at the 0 mark on the x-axis and between 0 and 2 marks on the y-axis. 
+2) There is also a strong negative correlation between the -10 mark and 0 on the x-axis which could be representative that when factor 1 begins to move to have a strong positive weight from an originally negative weight, factor 2 begins to have a negative weigh on the data. 
+3) At 20 on the x axis, it seems that when Factor 1 is having a very strong weight on the data, Factor 2's weight can range between -3 and positive 1 which is quite large.
+4) There also seems to be a genera trend from the 0 to the 16 mark on the x-axis where factor 1 and factor 2 both shar a negative slope. Factor 2 only increases around 4 units while factor 1 increases by 16. This shows that factor 1 has a much stronger effect on the data than factor 2 for this period. 
+
+```{r}
+OldCurve<-AssignmentData[135,]
+NewCurve<-AssignmentData[136,]
+CurveChange<-NewCurve-OldCurve
+FactorsChange<-Factors[136,]-Factors[135,]
+ModelCurveAdjustment.1Factor<-OldCurve+t(Loadings[,1])*FactorsChange[1]
+ModelCurveAdjustment.2Factors<-OldCurve+t(Loadings[,1])*FactorsChange[1]+t(Loadings[,2])*FactorsChange[2]
+ModelCurveAdjustment.3Factors<-OldCurve+t(Loadings[,1])*FactorsChange[1]+t(Loadings[,2])*FactorsChange[2]+
+  t(Loadings[,3])*FactorsChange[3]
+matplot(Maturities,
+        t(rbind(OldCurve,NewCurve,ModelCurveAdjustment.1Factor,ModelCurveAdjustment.2Factors,
+                ModelCurveAdjustment.3Factors)),
+        type="l",lty=c(1,1,2,2,2),col=c("black","red","green","blue","magenta"),lwd=3,ylab="Curve Adjustment")
+legend(x="topright",c("Old Curve","New Curve","1-Factor Adj.","2-Factor Adj.",
+                      "3-Factor Adj."),lty=c(1,1,2,2,2),lwd=3,col=c("black","red","green","blue","magenta"))
+rbind(CurveChange,ModelCurveAdjustment.3Factors-OldCurve)
+```
+Q: Explain how shapes of the loadings affect the adjustments using only factor 1, factors 1 and 2, and all 3 factors. 
+A: The graph above compares rows 136 and 135, and aims to see how the factors affect each of the maturities. 
+The first factor: The first factor takes the old curve and inreases the new curve's Y greatly. It can be seen that the first factor under weights the new curve from 0 to 2.5 on the x axis, and overshoots the new curve from around 5 to 30 on the x-axis. The first and second factor and all 3 factors combined do a nearly perfect job of fitting the new curve.
+
+
+See the goodness of fit for the example of 10Y yield.
+```{r}
+cbind(Maturities,Loadings)
+Model.10Y<-AssignmentData.means[,6]+Loadings[6,1]*Factors[,1]+Loadings[6,2]*Factors[,2]+Loadings[6,3]*Factors[,3]
+matplot(cbind(AssignmentData[,6],Model.10Y),type="l",lty=1,lwd=c(3,1),col=c("black","red"),ylab="10Y Yield")
+```
+As expectd the red line fits the black line because the eigenvalues multiplied by their vectors will reproduce numbers very close to the original data set. 
+
+
+PCA not manually done
+```{r}
+PCA.Yields<-princomp(AssignmentData[,1:7])
+cbind(PCA.Yields$loadings[,1:3],Maturities,Eigen.Decomposition$vectors[,1:3])
+matplot(Maturities,PCA.Yields$loadings[,1:3],type="l",col=c("black","red","green"),lty=1,lwd=3)
+matplot(PCA.Yields$scores[,1:3],type="l",col=c("black","red","green"),lwd=3,lty=1)
+```
+As expected, these are the same graphs that were seen earlier.  
+
+Change the signs fo the first factor and factor loading again.
+```{r}
+PCA.Yields$loadings[,1]<--PCA.Yields$loadings[,1]
+PCA.Yields$scores[,1]<--PCA.Yields$scores[,1]
+matplot(Maturities,PCA.Yields$loadings[,1:3],type="l",col=c("black","red","green"),lty=1,lwd=3)
+matplot(PCA.Yields$scores[,1:3],type="l",col=c("black","red","green"),lwd=3,lty=1)
+```
+
+```{r}
+matplot(cbind(PCA.Yields$scores[,1],AssignmentData.Output,Factors[,1]),type="l",col=c("black","red","green"),lwd=c(3,2,1),lty=c(1,2,3),ylab="Factor 1")
+```
+OMG!!OUTPUT1 is the first eigenvector!!
+
+Compare the regression coefficients from Step 2 and Step 3 with factor loadings.
+First, look at the slopes for AssignmentData.Input~AssignmentData.Output
+```{r}
+t(apply(AssignmentData, 2, function(AssignmentData.col) lm(AssignmentData.col~AssignmentData.Output)$coef))
+cbind(PCA.Yields$center,PCA.Yields$loadings[,1])
+```
+This shows that the zero loading equals the vector of intercepts of models Y~Output1, where Y is one of the columns of yields in the data.
+Also, the slopes of the same models are equal to the first loading.
+
+Check if the same is true in the opposite direction: is there a correspondence between the coefficients of models Output1~Yield and the first loading?
+Yes there is, as shall be seen below. 
+```{r}
+AssignmentData.Centered<-t(apply(AssignmentData,1,function(AssignmentData.row) AssignmentData.row-PCA.Yields$center))
+dim(AssignmentData.Centered)
+t(apply(AssignmentData.Centered, 2, function(AssignmentData.col) lm(AssignmentData.Output~AssignmentData.col)$coef))
+```
+
+To recover the loading of the first factor by doing regression, use all inputs togehter.
+```{r}
+t(lm(AssignmentData.Output~AssignmentData.Centered)$coef)[-1]
+PCA.Yields$loadings[,1]
+```
+This means that the factor is a portfolio of all input variables with weights!
+
+

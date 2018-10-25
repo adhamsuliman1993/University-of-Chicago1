@@ -1,0 +1,2 @@
+"0","Y <- rbinom(nSample,size = 1, prob = prbty)"
+"0","plot(X,Y)"

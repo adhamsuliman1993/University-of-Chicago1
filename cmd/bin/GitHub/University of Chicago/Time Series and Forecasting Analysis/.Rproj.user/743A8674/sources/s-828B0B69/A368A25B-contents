@@ -1,0 +1,77 @@
+/***********************************************
+**                MSc ANALYTICS 
+**     DATA ENGINEERING PLATFORMS (MSCA 31012)
+** File:   Class Exercise - RMySQL
+** Desc:   Connecting to MySQL from RStudio
+** Auth:   Shreenidhi Bharadwaj, Ashish Pujari
+** Date:   04/08/2018
+************************************************/
+
+
+We can work on MySQL from R by using the package RMySQL
+
+
+install the following packages
+```{r}
+install.packages("RMySQL");
+install.packages("dbplyr");
+install.packages("dplyr");
+install.packages("ggplot2");
+install.packages("knitr");
+```
+
+Initialize libraries
+```{r, echo=FALSE}
+library(RMySQL);
+library(dplyr);
+library(ggplot2);
+library(DBI);
+
+```
+
+First 5 qustions from part A, question 3
+a)
+```{r, echo=FALSE}
+connection = dbConnect(MySQL(),user="root", password="root", 
+                dbname="sakila", host="localhost")
+myQuery <- "select count(*) from film;"
+dbGetQuery(connection, myQuery)
+```
+
+b)
+```{r, echo=FALSE}
+connection = dbConnect(MySQL(),user="root", password="root", 
+                dbname="sakila", host="localhost")
+myQuery <- "select min(amount),max(amount) from payment;"
+dbGetQuery(connection, myQuery)
+```
+
+c)
+```{r, echo=FALSE}
+connection = dbConnect(MySQL(),user="root", password="root", 
+                dbname="sakila", host="localhost")
+myQuery <- "select count(distinct(customer_id)) 
+from payment
+where payment_date between '2005-02-01' and '2005-05-31';"
+dbGetQuery(connection, myQuery)
+```
+
+d)
+```{r, echo=FALSE}
+connection = dbConnect(MySQL(),user="root", password="root", 
+                dbname="sakila", host="localhost")
+myQuery <- "select title from film
+where replacement_cost > 15 or rental_duration between 6 and 10;"
+dbGetQuery(connection, myQuery)
+```
+
+e)
+```{r, echo=FALSE}
+connection = dbConnect(MySQL(),user="root", password="root", 
+                dbname="sakila", host="localhost")
+myQuery <- "select sum(amount) from payment
+where year(payment_date) = 2005;"
+dbGetQuery(connection, myQuery)
+```
+
+

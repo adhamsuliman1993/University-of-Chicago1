@@ -1,0 +1,149 @@
+---
+title: "Workshop 9"
+author: "Adham Suliman"
+date: "August 22, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+#rm(lists=ls())
+knitr::opts_chunk$set(echo = TRUE)
+options(width = 100, warn = 0)
+if(!"pacman" %in% rownames(installed.packages())) {
+  install.packages("pacman")
+}
+pacman::p_load(tidyverse,faraway,corrplot, tinytex, dplyr,zoo, knitr, rgl, relaimpo, MuMIn, broom,ggplot2, tidyr, fields, cluster, data.table, reshape2,poLCA, stats, AER, MASS, pscl, faraway, pscl, lattice, latticeExtra, copula,rmvdc, lme4)
+```
+
+md.random.ml is where we take into account the random effect.
+the md.null is where we don't take into account random effect
+run annova on both of them to show random effect has no effect.
+
+
+
+Within bayesian analysis, isntead of looking at normal curve for variance of pop, you can replace it with T distribution which has fat tails and skinny middle. Fat tails allows for samples who are resistant to shrinkage to stay.
+
+
+amd vs nmod shows that even taking int account random effect for mix of blend, treatment doesn't change anything. 
+
+cyear|person: random slopse but constant per person. 
+
+predict(gg,type="response") used for glm. 
+
+
+
+
+
+
+```{r}
+library(lme4)
+data(sleepstudy)
+sleepstudy
+fm8 <- lmer(Reaction~Days+(Days|Subject),data=sleepstudy,REML=F)
+head(ranef(fm8)$Subject)
+```
+
+
+
+for confint
+when there is no correlation, sig 2 is slope
+mixed:
+sig-1= intercept for mixed
+sig2= correlation
+sig3=slope
+sigma= epsilon
+fixed:
+(intercept)
+days
+```{r}
+confint(fm8)
+
+```
+
+
+
+```{r}
+summary(fm8)
+```
+
+
+
+
+
+
+
+
+
+```{r cars}
+data(Oxboys,package="nlme")
+head(Oxboys)
+fm1 <- lmer(height~I(age^2)|Subject,Oxboys,REML=F)
+head(ranef(fm1)$Subject)
+```
+
+
+
+```{r}
+test_data <- read.table(paste('Week9_Test_Sample.csv',sep = '/'), header=TRUE)
+head(test_data)
+mFixedEffects <- lm(Response~Predictor, test_data)
+confint(mFixedEffects)
+```
+
+
+```{r}
+mCorrelatedRandomEffects <- lmer(Response~Predictor+(Predictor|Subject),test_data,REML=F) 
+#summary(mCorrelatedRandomEffects)
+confint(mCorrelatedRandomEffects)
+```
+
+
+```{r}
+mIndependentRandomEffects<-lmer(Response~Predictor+(1|Subject)+(0+Predictor|Subject),test_data,REML=F) 
+#summary(mIndependentRandomEffects)
+confint(mIndependentRandomEffects)
+```
+
+
+
+```{r}
+rnames <- c("Intercept","Predictor","sigmaIntercept","sigmaSlope","Correlation")
+cnames <- c("mFixedEffects","mCorrelatedRandomEffects","mIndependentRandomEffects")
+significance <- matrix(nrow=5,ncol=3,dimnames = list(rnames,cnames))
+significance[c(1,2),c(1,2,3)] <- 1 
+significance[c(3,4),c(2,3)] <- 1
+significance[c(5),c(2)] <- 0
+significance[c(5),c(3)] <- 1
+significance[c(3,4,5),c(1)] <- 0
+significance
+anova(mFixedEffects)
+anova(mCorrelatedRandomEffects,mIndependentRandomEffects)
+anova(mIndependentRandomEffects)
+anova(mCorrelatedRandomEffects)
+```
+
+
+
+
+```{r}
+md.random <- (VarCorr(mCorrelatedRandomEffects))
+md.random.ml <- (VarCorr(mIndependentRandomEffects))
+ranef(mCorrelatedRandomEffects)
+#ranef(md.random.ml)
+```
+
+
+```{r}
+res <- list(selectedModel=c("independent_Random_Effects"),
+            significance= significance)
+saveRDS(res, file = paste('result.rds',sep = '/'))
+res
+```
+
+
+
+
+```{r}
+res1
+```
+

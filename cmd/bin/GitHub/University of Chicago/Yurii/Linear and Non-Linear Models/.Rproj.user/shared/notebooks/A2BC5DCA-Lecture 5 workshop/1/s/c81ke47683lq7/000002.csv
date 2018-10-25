@@ -1,0 +1,4 @@
+"0","res <- list(predicted.prob=predicted.prob,"
+"0","            log.loss.polr.train=log.loss.polr.train,"
+"0","            log.loss.multinom.train=log.loss.multinom.train)"
+"0","saveRDS(res, file = paste('result.rds',sep = '/'))"

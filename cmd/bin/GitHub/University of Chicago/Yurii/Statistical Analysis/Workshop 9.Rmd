@@ -1,0 +1,120 @@
+---
+title: "Workshop 9"
+output: html_document
+---
+```{r, include=FALSE}
+if(!"pacman" %in% rownames(installed.packages())) {
+  install.packages("pacman")
+}
+pacman::p_load(tidyverse,faraway,corrplot, tinytex, dplyr,zoo, knitr, rgl, relaimpo, MASS, boot, leaps)
+```
+
+
+```{r setup, include=FALSE}
+head(swiss)
+rownames(swiss)
+swissPredictors<-swiss[,-1]
+swissPredictors
+linMod<-lm(Fertility~.,data=swiss)
+summary(linMod)
+```
+
+
+```{r cars}
+summary(linMod)
+drop1(linMod)
+linMod1<-lm(Fertility~Agriculture+Education+Catholic+Infant.Mortality,data=swiss)
+drop1(linMod1)
+summary(linMod1)
+```
+What happens if you remove the only insignificant predictor from the model?
+The Intercept and only two variables seem to be significant when we take out Examination. 
+How much does the R2 and adjusted R2 change?
+R2 went down and adj.R2 stayed nearly where it was before. 
+How significant are the new parameters?
+All paramters are now significant with Education being the most and catholic being the second.
+How do the values of all parameters change? Is there an explanation to the changes?
+Catholic become much more significant, but why? 
+
+```{r}
+linMod2<-lm(Fertility~Agriculture+Examination+Catholic+Infant.Mortality,data=swiss)
+summary(linMod2)
+```
+
+
+```{r pressure, echo=FALSE}
+metrics.swiss <- calc.relimp(linMod, type = c("lmg","first","last","betasq","pratt"))
+metrics.swiss
+
+```
+Compare totalRSq.lmg with the summary of linear model linMod.
+A: These are the same.
+
+Q:Compare the sum of metrics.swiss@first with the summary of linear model linMod and with the sum of squares of correlation coefficients of predictors and the output.
+A: I don't understand what we are looking for here because 1.37 is impossible to acheive for correlation unless this is covariance?
+
+Q: sum(apply(swiss[,-1],2,cor,swiss[,1])^2) ???
+A:??
+
+Q:Which predictor is selected as the most important by the measures of relative importance?
+What is the best model containing 4 predictors according to different measures?
+A: The most important is education. The 4 predictors I would use would be all except agriculture.
+
+
+```{r}
+linMod.noAgriculture<-lm(Fertility~Examination+Education+Catholic+Infant.Mortality,data=swiss)
+summary(linMod.noAgriculture)
+```
+
+```{r}
+drop1(linMod.noAgriculture)
+linMod.noAgriculture.noExamination<-lm(Fertility~Education+Catholic+Infant.Mortality, swiss)
+summary(linMod.noAgriculture.noExamination)
+```
+
+Q:Summary: The best choice made as a result of using lmg is Fertility~Education+Catholic+Infant.Mortality with R2= 0.6625438.
+A:Shouldn't we care about adj.R2?
+
+```{r}
+library(leaps)
+subsetsswiss<-regsubsets(x=swiss[2:6],y=swiss$Fertility)
+summary(subsetsswiss)$which
+summary(subsetsswiss)$rsq
+```
+MQ:Why was lmg.rank for catholic 4 above, but here it is rated as the second?
+The variable rsq of the same object shows R2 of each of the choices.
+One can select an appropriate level of R2 and use the model defined in the table.
+
+```{r}
+swissPredictors.PCA<-princomp(swissPredictors)
+names(swissPredictors.PCA)
+plot(swissPredictors.PCA)
+swissPredictors.PCA$sdev^2
+barplot(swissPredictors.PCA$sdev^2/sum(swissPredictors.PCA$sdev^2),ylim=c(0,1))
+```
+
+```{r}
+cumsum(swissPredictors.PCA$sdev^2/sum(swissPredictors.PCA$sdev^2))
+(swissPCALoadings<-swissPredictors.PCA$loadings)
+```
+
+```{r}
+matplot(1:5,swissPredictors.PCA$loadings,type="l",lty=1,lwd=2,xaxt="n",xlab="Predictor",ylab="Factor Loadings",ylim=c(-1,1.5),col=c("black","red","blue","green","cyan"))
+abline(h=0)
+axis(1, 1:5,labels=colnames(swissPredictors))
+legend("topright",legend=c("L1","L2","L3","L4","L5"),lty=1,lwd=2,cex=.7,col=c("black","red","blue","green","cyan"))
+```
+```{r}
+swissPCAFactors<-swissPredictors.PCA$scores
+swissRotated<-as.data.frame(cbind(Fertility=swiss$Fertility,swissPCAFactors))
+matplot(swissPredictors.PCA$scores,type="l",lty=1,lwd=2,ylim=c(-60,70),col=c("black","red","blue","green","cyan"))
+legend("topright",legend=c("F1","F2","F3","F4","F5"),lty=1,lwd=2,col=c("black","red","blue","green","cyan"))
+```
+```{r}
+pairs(as.matrix(swissRotated))
+```
+```{r}
+cor(swissPredictors.PCA$scores)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
